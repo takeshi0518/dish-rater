@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Icons } from './Icon/icons';
+import { Icons } from '../Icon/icons';
 
 export const MainLogo = ({ className }: { className?: string }) => {
   return (

@@ -1,4 +1,4 @@
-import { MainLogo } from '@/components/main-log';
+import { MainLogo } from '@/components/layout/main-logo';
 export default function AuthLayout({
   children,
 }: Readonly<{
