@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { MainLogo } from '@/components/main-log';
+import { MainLogo } from '@/components/layout/main-logo';
 
 export default function Home() {
   return (
