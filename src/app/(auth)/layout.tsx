@@ -6,10 +6,14 @@ export default function AuthLayout({
 }>) {
   return (
     <div>
-      <header>
+      <header className="p-4">
         <MainLogo />
       </header>
-      <main>{children}</main>
+      <main>
+        <div className="flex justify-center items-center h-full min-h-screen p-4">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }
