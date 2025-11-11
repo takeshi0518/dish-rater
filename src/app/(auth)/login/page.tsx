@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Link from 'next/link';
+import { Icons } from '@/components/Icon/icons';
 
 export default function LoginPage() {
   return (
@@ -52,8 +53,14 @@ export default function LoginPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline">Github</Button>
-          <Button variant="outline">Google</Button>
+          <Button variant="outline">
+            <Icons.github />
+            Github
+          </Button>
+          <Button variant="outline">
+            <Icons.google />
+            Google
+          </Button>
         </div>
       </CardContent>
 

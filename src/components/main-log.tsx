@@ -1,9 +1,9 @@
-import { Utensils } from 'lucide-react';
+import { Icons } from './Icon/icons';
 
 export const MainLogo = () => {
   return (
     <div className="flex items-center gap-2">
-      <Utensils size={40} color="orange" />
+      <Icons.utensils size={40} color="orange" />
       <span className="text-xl font-bold">dish-rater</span>
     </div>
   );
