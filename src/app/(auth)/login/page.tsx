@@ -36,7 +36,7 @@ export default function LoginPage() {
             <Input id="password" type="password" />
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full cursor-pointer">
             ログイン
           </Button>
         </form>
@@ -53,11 +53,11 @@ export default function LoginPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline">
+          <Button variant="outline" className="cursor-pointer">
             <Icons.github />
             Github
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" className="cursor-pointer">
             <Icons.google />
             Google
           </Button>
