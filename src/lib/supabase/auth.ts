@@ -1,3 +1,5 @@
+'use server';
+
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from './server';
 
@@ -14,8 +16,9 @@ export async function signUp(formData: FormData) {
 
   if (error) {
     console.error('Sign Upに失敗しました: ', error.message);
-    redirect('/login');
+    redirect('/signup');
   }
+  redirect('/login');
 }
 
 export async function signIn(formData: FormData) {
