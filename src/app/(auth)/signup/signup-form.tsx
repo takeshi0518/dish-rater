@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { signUp } from '@/lib/supabase/auth';
+import { Icons } from '@/components/Icon/icons';
 
 const signupSchema = z
   .object({
@@ -46,7 +47,11 @@ export default function SignupForm() {
     formData.append('email', data.email);
     formData.append('password', data.password);
 
-    await signUp(formData);
+    try {
+      await signUp(formData);
+    } catch (error) {
+      console.error('サインアップエラー:', error);
+    }
   }
 
   return (
@@ -92,8 +97,16 @@ export default function SignupForm() {
         </div>
       </div>
 
-      <Button type="submit" className="w-full cursor-pointer">
-        {isSubmitting ? '登録中...' : '登録'}
+      <Button
+        type="submit"
+        className="w-full cursor-pointer"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <Icons.loaderCircle className="h-5 w-5 animate-spin" />
+        ) : (
+          '登録'
+        )}
       </Button>
     </form>
   );
