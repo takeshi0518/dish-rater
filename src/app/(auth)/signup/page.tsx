@@ -1,5 +1,3 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 import { Icons } from '@/components/Icon/icons';
-import { signUp } from '@/lib/supabase/auth';
+import SignupForm from './signup-form';
 
 export default function Signup() {
   return (
@@ -22,31 +20,7 @@ export default function Signup() {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <form action={signUp} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">メールアドレス</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="youremail@example.com"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">パスワード</Label>
-            <Input id="password" name="password" type="password" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">パスワード確認</Label>
-            <Input id="password" name="password" type="password" />
-          </div>
-
-          <Button type="submit" className="w-full cursor-pointer">
-            登録
-          </Button>
-        </form>
+        <SignupForm />
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
