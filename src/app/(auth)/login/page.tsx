@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 import { Icons } from '@/components/Icon/icons';
+import { signIn } from '@/lib/supabase/auth';
 
 export default function LoginPage() {
   return (
@@ -21,11 +22,12 @@ export default function LoginPage() {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <form className="space-y-4">
+        <form action={signIn} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">メールアドレス</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="youremail@example.com"
             />
@@ -33,7 +35,7 @@ export default function LoginPage() {
 
           <div className="space-y-2">
             <Label htmlFor="password">パスワード</Label>
-            <Input id="password" type="password" />
+            <Input id="password" name="password" type="password" />
           </div>
 
           <Button type="submit" className="w-full cursor-pointer">
