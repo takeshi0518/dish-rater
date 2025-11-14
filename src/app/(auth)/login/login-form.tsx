@@ -4,47 +4,36 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Icons } from '@/components/Icon/icons';
-import { signIn } from '@/lib/supabase/auth';
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'メールアドレスは必須です')
-    .email({ message: '有効なメールアドレスを入力してください' }),
-
-  password: z.string().min(1, 'パスワードは必須です'),
-});
-
-type LoginFormValue = z.infer<typeof loginSchema>;
+import { loginSchema, LoginFormValue } from '../types';
+import { useAuth } from '../hooks/use-auth';
 
 export default function LoginForm() {
+  const { login, isLoading, error } = useAuth();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormValue>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
   });
 
   async function onSubmit(data: LoginFormValue) {
-    const formData = new FormData();
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-
-    try {
-      await signIn(formData);
-    } catch (error) {
-      console.error('サインインエラー:', error);
-    }
+    await login(data);
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="min-h-[60px] mb-4">
+        {error && (
+          <div className="bg-red-100 text-red-700 text-sm rounded mb-4 p-4">
+            {error}
+          </div>
+        )}
+      </div>
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>
         <Input
@@ -72,10 +61,10 @@ export default function LoginForm() {
 
       <Button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isLoading}
         className="w-full cursor-pointer"
       >
-        {isSubmitting ? (
+        {isLoading ? (
           <Icons.loaderCircle className="w-5 h-5 animate-spin" />
         ) : (
           'ログイン'
