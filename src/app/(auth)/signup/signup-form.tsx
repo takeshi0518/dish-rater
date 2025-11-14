@@ -6,34 +6,34 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
-import { signUp } from '@/lib/supabase/auth';
+import { useAuth } from '../hooks/use-auth';
 import { Icons } from '@/components/Icon/icons';
 import { signupSchema, SignupFormValue } from '../types';
 
 export default function SignupForm() {
+  const { signup, isLoading, error } = useAuth();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignupFormValue>({
     resolver: zodResolver(signupSchema),
     mode: 'onChange',
   });
 
   async function onSubmit(data: SignupFormValue) {
-    const formData = new FormData();
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-
-    try {
-      await signUp(formData);
-    } catch (error) {
-      console.error('サインアップエラー:', error);
-    }
+    await signup(data);
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="min-h-[60px] mb-4">
+        {error && (
+          <div className="bg-red-100 text-red-700 text-sm rounded mb-4 p-4">
+            {error}
+          </div>
+        )}
+      </div>
       <div className="space-y-2">
         <Label htmlFor="email">メールアドレス</Label>
         <Input
@@ -78,9 +78,9 @@ export default function SignupForm() {
       <Button
         type="submit"
         className="w-full cursor-pointer"
-        disabled={isSubmitting}
+        disabled={isLoading}
       >
-        {isSubmitting ? (
+        {isLoading ? (
           <Icons.loaderCircle className="h-5 w-5 animate-spin" />
         ) : (
           '登録'

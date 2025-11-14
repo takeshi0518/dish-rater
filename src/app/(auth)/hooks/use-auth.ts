@@ -1,8 +1,8 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { signIn } from '@/lib/supabase/auth';
-import { type LoginFormValue } from '../types';
+import { signIn, signUp } from '@/lib/supabase/auth';
+import { type LoginFormValue, type SignupFormValue } from '../types';
 
 export function useAuth() {
   const router = useRouter();
@@ -27,8 +27,27 @@ export function useAuth() {
     }
   };
 
+  const signup = async (data: SignupFormValue) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      await signUp(data.email, data.password);
+      router.push('/login');
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('予期しないエラーが発生しました。');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     login,
+    signup,
     isLoading,
     error,
   };
