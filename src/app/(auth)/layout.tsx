@@ -7,7 +7,7 @@ export default function AuthLayout({
   return (
     <div>
       <main>
-        <div className="flex flex-col justify-center items-center h-full min-h-screen p-4">
+        <div className="flex flex-col justify-center items-center h-full min-h-screen p-6">
           <MainLogo className="mb-8" />
           {children}
         </div>

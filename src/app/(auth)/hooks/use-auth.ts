@@ -33,7 +33,7 @@ export function useAuth() {
       setError(null);
 
       await signUp(data.email, data.password);
-      router.push('/login');
+      router.push('/confirm-email');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
