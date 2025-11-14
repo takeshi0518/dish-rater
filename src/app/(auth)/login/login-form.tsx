@@ -4,22 +4,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Icons } from '@/components/Icon/icons';
 import { signIn } from '@/lib/supabase/auth';
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'メールアドレスは必須です')
-    .email({ message: '有効なメールアドレスを入力してください' }),
-
-  password: z.string().min(1, 'パスワードは必須です'),
-});
-
-type LoginFormValue = z.infer<typeof loginSchema>;
+import { loginSchema, LoginFormValue } from '../types';
 
 export default function LoginForm() {
   const {
