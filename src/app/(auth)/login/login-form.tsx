@@ -11,7 +11,7 @@ import { loginSchema, LoginFormValue } from '../types';
 import { useAuth } from '../hooks/use-auth';
 
 export default function LoginForm() {
-  const { login, isLoading, error } = useAuth();
+  const { login, loginWithGoogle, isLoading, error } = useAuth();
   const {
     register,
     handleSubmit,
@@ -96,7 +96,11 @@ export default function LoginForm() {
           <Icons.github />
           Github
         </Button>
-        <Button variant="outline" className="cursor-pointer">
+        <Button
+          onClick={loginWithGoogle}
+          variant="outline"
+          className="cursor-pointer"
+        >
           <Icons.google />
           Google
         </Button>
