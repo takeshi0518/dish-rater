@@ -75,10 +75,37 @@ export function useAuth() {
     }
   };
 
+  const loginWithGithub = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const supabase = createClient();
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('予期しないエラーが発生しました。');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     login,
     signup,
     loginWithGoogle,
+    loginWithGithub,
     isLoading,
     error,
   };
