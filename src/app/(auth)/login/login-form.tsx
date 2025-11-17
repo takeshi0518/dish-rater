@@ -11,7 +11,8 @@ import { loginSchema, LoginFormValue } from '../types';
 import { useAuth } from '../hooks/use-auth';
 
 export default function LoginForm() {
-  const { login, loginWithGoogle, isLoading, error } = useAuth();
+  const { login, loginWithGoogle, loginWithGithub, isLoading, error } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -92,7 +93,11 @@ export default function LoginForm() {
 
       {/* {OAuthボタン} */}
       <div className="grid grid-cols-2 gap-4">
-        <Button variant="outline" className="cursor-pointer">
+        <Button
+          onClick={loginWithGithub}
+          variant="outline"
+          className="cursor-pointer"
+        >
           <Icons.github />
           Github
         </Button>
