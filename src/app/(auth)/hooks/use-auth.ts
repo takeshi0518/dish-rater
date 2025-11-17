@@ -86,6 +86,9 @@ export function useAuth() {
         provider: 'github',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            prompt: 'select_account',
+          },
         },
       });
 
