@@ -31,13 +31,11 @@ export default function LoginForm() {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* {エラー表示} */}
-        <div className="min-h-[60px] mb-4">
-          {error && (
-            <div className="bg-red-100 text-red-700 text-sm rounded mb-4 p-4">
-              {error}
-            </div>
-          )}
-        </div>
+        {error && (
+          <div className="text-sm text-red-600 bg-red-50 p-3 rounded">
+            {error}
+          </div>
+        )}
 
         {/* {メールアドレス} */}
         <div className="space-y-2">
