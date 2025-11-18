@@ -35,6 +35,7 @@ export default function SignupForm() {
             {error}
           </div>
         )}
+
         {/* {メールアドレス} */}
         <div className="space-y-2">
           <Label htmlFor="email">メールアドレス</Label>

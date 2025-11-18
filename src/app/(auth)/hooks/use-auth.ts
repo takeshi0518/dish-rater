@@ -28,6 +28,8 @@ export function useAuth() {
       } else {
         setError('予期しないエラーが発生しました。');
       }
+    } finally {
+      setIsLoading((prev) => ({ ...prev, login: false }));
     }
   };
 
@@ -44,6 +46,8 @@ export function useAuth() {
       } else {
         setError('予期しないエラーが発生しました。');
       }
+    } finally {
+      setIsLoading((prev) => ({ ...prev, signup: false }));
     }
   };
 
