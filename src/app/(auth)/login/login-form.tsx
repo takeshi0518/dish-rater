@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Icons } from '@/components/Icon/icons';
 import { loginSchema, LoginFormValue } from '../types';
 import { useAuth } from '../hooks/use-auth';
+import { Divide } from 'lucide-react';
 
 export default function LoginForm() {
   const { login, loginWithGoogle, loginWithGithub, isLoading, error } =
@@ -68,10 +69,10 @@ export default function LoginForm() {
         {/* {ログインボタン} */}
         <Button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading.login}
           className="w-full cursor-pointer"
         >
-          {isLoading ? (
+          {isLoading.login ? (
             <Icons.loaderCircle className="w-5 h-5 animate-spin" />
           ) : (
             'ログイン'
@@ -98,16 +99,28 @@ export default function LoginForm() {
           variant="outline"
           className="cursor-pointer"
         >
-          <Icons.github />
-          Github
+          {isLoading.github ? (
+            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+          ) : (
+            <div className="flex items-center gap-2">
+              <Icons.github />
+              Github
+            </div>
+          )}
         </Button>
         <Button
           onClick={loginWithGoogle}
           variant="outline"
           className="cursor-pointer"
         >
-          <Icons.google />
-          Google
+          {isLoading.google ? (
+            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+          ) : (
+            <span className="flex items-center gap-2">
+              <Icons.google />
+              Google
+            </span>
+          )}
         </Button>
       </div>
     </>
