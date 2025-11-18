@@ -11,7 +11,8 @@ import { Icons } from '@/components/Icon/icons';
 import { signupSchema, SignupFormValue } from '../types';
 
 export default function SignupForm() {
-  const { signup, loginWithGoogle, isLoading, error } = useAuth();
+  const { signup, loginWithGoogle, loginWithGithub, isLoading, error } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -80,13 +81,13 @@ export default function SignupForm() {
           </div>
         </div>
 
-        {/* {ログインボタン} */}
+        {/* {サインアップボタン} */}
         <Button
           type="submit"
           className="w-full cursor-pointer"
-          disabled={isLoading}
+          disabled={isLoading.signup}
         >
-          {isLoading ? (
+          {isLoading.signup ? (
             <Icons.loaderCircle className="h-5 w-5 animate-spin" />
           ) : (
             '登録'
@@ -108,17 +109,33 @@ export default function SignupForm() {
 
       {/* {OAuthボタン} */}
       <div className="grid grid-cols-2 gap-4">
-        <Button variant="outline" className="cursor-pointer">
-          <Icons.github />
-          Github
+        <Button
+          onClick={loginWithGithub}
+          variant="outline"
+          className="cursor-pointer"
+        >
+          {isLoading.github ? (
+            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+          ) : (
+            <div className="flex items-center gap-2">
+              <Icons.github />
+              Github
+            </div>
+          )}
         </Button>
         <Button
           onClick={loginWithGoogle}
           variant="outline"
           className="cursor-pointer"
         >
-          <Icons.google />
-          Google
+          {isLoading.google ? (
+            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+          ) : (
+            <span className="flex items-center gap-2">
+              <Icons.google />
+              Google
+            </span>
+          )}
         </Button>
       </div>
     </>

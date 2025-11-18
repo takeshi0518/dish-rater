@@ -7,12 +7,17 @@ import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState({
+    login: false,
+    signup: false,
+    google: false,
+    github: false,
+  });
   const [error, setError] = useState<string | null>(null);
 
   const login = async (data: LoginFormValue) => {
     try {
-      setIsLoading(true);
+      setIsLoading((prev) => ({ ...prev, login: true }));
       setError(null);
 
       await signIn(data.email, data.password);
@@ -23,14 +28,12 @@ export function useAuth() {
       } else {
         setError('予期しないエラーが発生しました。');
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const signup = async (data: SignupFormValue) => {
     try {
-      setIsLoading(true);
+      setIsLoading((prev) => ({ ...prev, signup: true }));
       setError(null);
 
       await signUp(data.email, data.password);
@@ -41,14 +44,12 @@ export function useAuth() {
       } else {
         setError('予期しないエラーが発生しました。');
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const loginWithGoogle = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading((prev) => ({ ...prev, google: true }));
       setError(null);
 
       const supabase = createClient();
@@ -70,14 +71,12 @@ export function useAuth() {
       } else {
         setError('予期しないエラーが発生しました。');
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const loginWithGithub = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading((prev) => ({ ...prev, github: true }));
       setError(null);
 
       const supabase = createClient();
@@ -99,8 +98,6 @@ export function useAuth() {
       } else {
         setError('予期しないエラーが発生しました。');
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
