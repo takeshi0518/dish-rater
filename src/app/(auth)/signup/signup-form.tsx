@@ -29,6 +29,12 @@ export default function SignupForm() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        {/* {エラー表示} */}
+        {error && (
+          <div className="text-sm text-red-600 bg-red-50 p-3 rounded">
+            {error}
+          </div>
+        )}
         {/* {メールアドレス} */}
         <div className="space-y-2">
           <Label htmlFor="email">メールアドレス</Label>
