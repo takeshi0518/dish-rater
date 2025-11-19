@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signIn, signUp } from '@/lib/supabase/auth';
 import { type LoginFormValue, type SignupFormValue } from '../types';
 import { createClient } from '@/lib/supabase/client';
+import { getAuthErrorMessage } from '@/lib/utils';
 
 export function useAuth() {
   const router = useRouter();
@@ -23,11 +24,9 @@ export function useAuth() {
       await signIn(data.email, data.password);
       router.push('/dashboard');
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('予期しないエラーが発生しました。');
-      }
+      setError(getAuthErrorMessage(error));
+    } finally {
+      setIsLoading((prev) => ({ ...prev, login: false }));
     }
   };
 
@@ -39,11 +38,9 @@ export function useAuth() {
       await signUp(data.email, data.password);
       router.push('/confirm-email');
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('予期しないエラーが発生しました。');
-      }
+      setError(getAuthErrorMessage(error));
+    } finally {
+      setIsLoading((prev) => ({ ...prev, signup: false }));
     }
   };
 
@@ -66,11 +63,7 @@ export function useAuth() {
 
       if (error) throw error;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('予期しないエラーが発生しました。');
-      }
+      setError(getAuthErrorMessage(error));
     }
   };
 
@@ -93,11 +86,7 @@ export function useAuth() {
 
       if (error) throw error;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('予期しないエラーが発生しました。');
-      }
+      setError(getAuthErrorMessage(error));
     }
   };
 
