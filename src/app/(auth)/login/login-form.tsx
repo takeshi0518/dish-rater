@@ -9,7 +9,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Icons } from '@/components/Icon/icons';
 import { loginSchema, LoginFormValue } from '../types';
 import { useAuth } from '../hooks/use-auth';
-import { Divide } from 'lucide-react';
 
 export default function LoginForm() {
   const { login, loginWithGoogle, loginWithGithub, isLoading, error } =

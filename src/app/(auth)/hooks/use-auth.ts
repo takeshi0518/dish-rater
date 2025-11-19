@@ -34,11 +34,10 @@ export function useAuth() {
     try {
       setIsLoading((prev) => ({ ...prev, signup: true }));
       setError(null);
-
       await signUp(data.email, data.password);
       router.push('/confirm-email');
     } catch (error) {
-      setError(getAuthErrorMessage(error));
+      setError(getAuthErrorMessage(error))
     } finally {
       setIsLoading((prev) => ({ ...prev, signup: false }));
     }
