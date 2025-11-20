@@ -8,3 +8,5 @@ CREATE TABLE public.dishes (
   updated_at timestampz default now() not null
 );
 
+-- RLSを有効化
+alter table public.dishes enable row level security;
