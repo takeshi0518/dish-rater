@@ -1,6 +1,4 @@
-import { Utensils } from 'lucide-react';
-import { LoaderCircle } from 'lucide-react';
-import { MailCheck } from 'lucide-react';
+import { Utensils, LoaderCircle, MailCheck, UserRound } from 'lucide-react';
 
 type IconProps = React.ComponentProps<'svg'>;
 
@@ -53,9 +51,10 @@ const GoogleIcon = (props: IconProps) => (
 );
 
 export const Icons = {
-  utensils: Utensils,
   github: GithubIcon,
   google: GoogleIcon,
+  utensils: Utensils,
   loaderCircle: LoaderCircle,
   mailCheck: MailCheck,
+  userIcon: UserRound,
 } as const;
