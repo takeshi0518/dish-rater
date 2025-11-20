@@ -16,3 +16,9 @@ CREATE POLICY "Anyone can view dishes"
   on public.dishes
   for select
   using(true);
+
+ポリシー: 自分の料理だけ更新できる
+  CREATE POLICY "Authenticated users can insert dishes"
+    on public.dishes
+    for insert
+    with check (auth.uid() = user_id);
