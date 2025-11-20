@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/Icon/icons';
 import { User } from '@/app/types/uset';
@@ -37,9 +36,7 @@ export default function NavList({ user }: NavListProps) {
             size="20"
             color="orange"
           />
-          <span className="text-sm truncate text-muted-foreground">
-            ログインしていません
-          </span>
+          <span className="text-sm truncate text-muted-foreground">guest</span>
         </li>
       )}
     </ul>
