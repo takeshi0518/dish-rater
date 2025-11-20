@@ -1,4 +1,14 @@
-import { Utensils, LoaderCircle, MailCheck, UserRound } from 'lucide-react';
+import {
+  Utensils,
+  LoaderCircle,
+  MailCheck,
+  UserRound,
+  House,
+  BookOpen,
+  UserPenIcon,
+  LogIn,
+  UserPlus,
+} from 'lucide-react';
 
 type IconProps = React.ComponentProps<'svg'>;
 
@@ -57,4 +67,9 @@ export const Icons = {
   loaderCircle: LoaderCircle,
   mailCheck: MailCheck,
   userIcon: UserRound,
+  home: House,
+  myPage: BookOpen,
+  profile: UserPenIcon,
+  login: LogIn,
+  signin: UserPlus,
 } as const;
