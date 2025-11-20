@@ -9,4 +9,10 @@ CREATE TABLE public.dishes (
 );
 
 -- RLSを有効化
-alter table public.dishes enable row level security;
+ALTER TABLE public.dishes enable row level security;
+
+-- ポリシー: 誰でも料理を閲覧できる
+CREATE POLICY "Anyone can view dishes"
+  on public.dishes
+  for select
+  using(true);
