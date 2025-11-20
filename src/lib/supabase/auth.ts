@@ -28,14 +28,3 @@ export async function signIn(email: string, password: string) {
     throw error;
   }
 }
-
-export async function signOut() {
-  const supabase = await createSupabaseServerClient();
-
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    console.error('Sign Outに失敗しました: ', error.message);
-  }
-  redirect('/login');
-}
