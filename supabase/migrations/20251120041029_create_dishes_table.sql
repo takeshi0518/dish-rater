@@ -18,10 +18,10 @@ CREATE POLICY "Anyone can view dishes"
   using(true);
 
 -- ポリシー: ログインユーザーは料理を追加できる
-  CREATE POLICY "Authenticated users can insert dishes"
-    on public.dishes
-    for insert
-    with check (auth.uid() = user_id);
+CREATE POLICY "Authenticated users can insert dishes"
+  on public.dishes
+  for insert
+  with check (auth.uid() = user_id);
 
 -- ポリシー: 自分の料理だけ更新できる
 CREATE POLICY "Users can update their own dishes"
