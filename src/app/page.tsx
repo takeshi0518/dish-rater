@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { MainLogo } from '@/components/layout/main-logo';
 import { Icons } from '@/components/Icon/icons';
 
 export default function Home() {
@@ -25,7 +24,11 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/login">
-              <Button size="lg" className="w-full sm:w-auto cursor-pointer">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto cursor-pointer"
+                variant="outline"
+              >
                 Login
               </Button>
             </Link>
@@ -36,6 +39,11 @@ export default function Home() {
                 className="w-full sm:w-auto cursor-pointer"
               >
                 Signup
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button size="lg" className="w-full sm:w-auto cursor-pointer">
+                料理を見る
               </Button>
             </Link>
           </div>
