@@ -4,7 +4,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'dish-rater',
-  description: 'さまざまな料理を評価して記録できるアプリです',
+  description: '料理を評価・記録できるアプリ',
 };
 
 export const roboto_mono = Roboto_Mono({
