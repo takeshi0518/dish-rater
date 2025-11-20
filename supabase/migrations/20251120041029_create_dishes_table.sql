@@ -4,8 +4,8 @@ CREATE TABLE public.dishes (
   name text not null,
   description text,
   rating smallint check (rating >= 1 and rating <= 5),
-  created_at timestampz default now() not null,
-  updated_at timestampz default now() not null
+  created_at timestamptz default now() not null,
+  updated_at timestamptz default now() not null
 );
 
 -- RLSを有効化
@@ -33,4 +33,18 @@ CREATE POLICY "Users can update their own dishes"
 CREATE POLICY "Users can delete their own dishes"
   on public.dishes
   for delete
-  using(auth.id() = user_id);
+  using(auth.uid() = user_id);
+
+-- updated_atを自動更新するトリガー
+CREATE OR REPLACE FUNCTION public.handle_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+CREATE TRIGGER set_updated_at
+  before update on public.dishes
+  for each row
+  execute function public.handle_updated_at();
