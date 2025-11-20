@@ -23,8 +23,14 @@ CREATE POLICY "Anyone can view dishes"
     for insert
     with check (auth.uid() = user_id);
 
-ポリシー: 自分の料理だけ更新できる
+-- ポリシー: 自分の料理だけ更新できる
 CREATE POLICY "Users can update their own dishes"
   on public.dishes
   for update
   using(auth.uid() = user_id);
+
+-- ポリシー: 自分の料理だけ削除できる
+CREATE POLICY "Users can delete their own dishes"
+  on public.dishes
+  for delete
+  using(auth.id() = user_id);
