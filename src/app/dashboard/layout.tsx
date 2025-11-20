@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Navbar from '../../components/header/nav-bar';
 
 export const metadata: Metadata = {
   title: 'みんなの料理 | dish-rater',
@@ -15,5 +16,12 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="min-h-screen bg-gray-50">{children}</div>;
+  return (
+    <div className="flex flex-col md:flex-row h-screen">
+      <Navbar />
+      <main className=" bg-gray-50 flex-1 overflow-auto p-6 pt-28 md:pt-6">
+        {children}
+      </main>
+    </div>
+  );
 }
