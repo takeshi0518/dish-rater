@@ -3,7 +3,7 @@ import BottomNav from './bottom-nav';
 import MobileHeader from './mobile-header';
 import Sidebar from './sidebar';
 
-export default async function Navbar() {
+export default async function Navigation() {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
