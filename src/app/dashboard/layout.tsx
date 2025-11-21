@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Navbar from '../../components/header/nav-bar';
+import Navigation from '../../components/header/navigation';
 
 export const metadata: Metadata = {
   title: 'みんなの料理 | dish-rater',
@@ -18,7 +18,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      <Navbar />
+      <Navigation />
       <main className=" bg-gray-50 flex-1 overflow-auto p-6 pt-28 md:pt-6">
         {children}
       </main>
