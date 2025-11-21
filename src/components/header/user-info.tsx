@@ -51,9 +51,29 @@ export default function UserInfo({ user, variant = 'compact' }: UserInfoProps) {
 
   // サイドバー用
   return (
-    <ul className="flex flex-col gap-2">
-      <li>login</li>
-      <li>signup</li>
-    </ul>
+    <div className="flex flex-col gap-3">
+      {user ? (
+        <div className="bg-white rounded-lg p-3 shadow-sm">
+          <div className="flex items-center gap-2 mb-3">
+            <Icons.userIcon size={20} color="orange" />
+            <span className="text-sm font-medium truncate">{userName}</span>
+          </div>
+          <form action="/auth/signout" method="post">
+            <Button
+              size="sm"
+              variant="outline"
+              className="cursor-pointer w-full hover:bg-gray-50"
+            >
+              Logout
+            </Button>
+          </form>
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg p-3 shadow-sm flex gap-2">
+          <Icons.userIcon size={20} color="orange" />
+          <span className="text-sm font-medium truncate">guest</span>
+        </div>
+      )}
+    </div>
   );
 }

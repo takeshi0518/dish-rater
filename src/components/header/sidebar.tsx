@@ -33,8 +33,8 @@ export default function Sidebar({ user }: SidebarProps) {
                   : 'hover:bg-amber-200'
               }`}
             >
-              <Icons.home size={24} strokeWidth={1.5} />
-              <span className="font-medium">home</span>
+              <Icons.home size={20} strokeWidth={1.5} />
+              <span className="font-medium text-base">home</span>
             </Link>
           </li>
 
@@ -50,7 +50,7 @@ export default function Sidebar({ user }: SidebarProps) {
                       : 'hover:bg-amber-200'
                   }`}
                 >
-                  <Icons.myPage size={24} strokeWidth={1.5} />
+                  <Icons.myPage size={20} strokeWidth={1.5} />
                   <span className="font-medium">My Page</span>
                 </Link>
               </li>
@@ -65,7 +65,7 @@ export default function Sidebar({ user }: SidebarProps) {
                       : 'hover:bg-amber-200'
                   }`}
                 >
-                  <Icons.profile size={24} strokeWidth={1.5} />
+                  <Icons.profile size={20} strokeWidth={1.5} />
                   <span className="font-medium">Profile</span>
                 </Link>
               </li>
@@ -82,7 +82,7 @@ export default function Sidebar({ user }: SidebarProps) {
                       : 'hover:bg-amber-200'
                   }`}
                 >
-                  <Icons.login size={24} strokeWidth={1.5} />
+                  <Icons.login size={20} strokeWidth={1.5} />
                   <span className="font-medium">Login</span>
                 </Link>
               </li>
@@ -97,7 +97,7 @@ export default function Sidebar({ user }: SidebarProps) {
                       : 'hover:bg-amber-200'
                   }`}
                 >
-                  <Icons.signin size={24} strokeWidth={1.5} />
+                  <Icons.signin size={20} strokeWidth={1.5} />
                   <span className="font-medium">SignUp</span>
                 </Link>
               </li>
@@ -105,6 +105,10 @@ export default function Sidebar({ user }: SidebarProps) {
           )}
         </ul>
       </nav>
+
+      <div className="mt-auto pt-6 border-t border-amber-500">
+        <UserInfo user={user} variant="full" />
+      </div>
     </aside>
   );
 }
