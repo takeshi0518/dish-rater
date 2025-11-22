@@ -19,7 +19,7 @@ export default function DashboardLayout({
   return (
     <div className="flex flex-col md:flex-row h-screen">
       <Navigation />
-      <main className=" bg-gray-50 flex-1 overflow-auto p-6 pt-28 md:pt-6">
+      <main className=" bg-gray-50 flex-1 overflow-auto p-2 pt-28 md:pt-6">
         {children}
       </main>
     </div>
