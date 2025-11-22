@@ -14,7 +14,7 @@ type SidebarProps = {
 export default function Sidebar({ user }: SidebarProps) {
   const pathname = usePathname();
   return (
-    <aside className="hidden md:flex flex-col w-64 h-screen bg-amber-100 p-6 fixed left-0 top-0">
+    <aside className="hidden md:flex flex-col w-64 h-screen bg-amber-100 p-6">
       <Link href="/dashboard" className="flex items-center gap-2 mb-8">
         <Icons.utensils color="orange" size={40} />
         <h1 className="text-2xl font-bold">dish-rater</h1>
@@ -106,7 +106,9 @@ export default function Sidebar({ user }: SidebarProps) {
         </ul>
       </nav>
 
+      {/* 区切り線 */}
       <div className="mt-auto pt-6 border-t border-amber-500">
+        {/* ユーザー情報 */}
         <UserInfo user={user} variant="full" />
       </div>
     </aside>
