@@ -1,19 +1,37 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import DishCard from '@/components/dish/dish-card';
+import DishSearch from '@/components/dish/dish-search';
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+
+  // 料理データを取得
+  const { data: dishes, error } = await supabase
+    .from('dishes')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching dishes:', error);
+  }
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">みんなの料理</h1>
-      {user ? <p>ログイン中: {user.email}</p> : <p>未ログイン (閲覧のみ)</p>}
+    <div className="container mx-auto max-w-full">
+      {/* 料理検索窓 */}
+      <DishSearch />
 
-      <div className="mt-8">
-        <p>ここに料理一覧が表示されます</p>
-      </div>
+      {dishes && dishes.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
+          {dishes?.map((dish) => (
+            <DishCard key={dish.id} dish={dish} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16">
+          <p className="text-gray-500 text-lg">まだ料理が投稿されていません</p>
+          <p className="text-gray-400 mt-2">最初の料理を投稿してみませんか?</p>
+        </div>
+      )}
     </div>
   );
 }
