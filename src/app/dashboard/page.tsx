@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import DishCard from '@/components/dish/dish-card';
+import DishSearch from '@/components/dish/dish-search';
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
@@ -16,12 +17,8 @@ export default async function DashboardPage() {
 
   return (
     <div className="container mx-auto max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">みんなの料理</h1>
-        <p className="text-gray-600 mt-2">
-          {dishes?.length || 0}件の料理が投稿されています
-        </p>
-      </div>
+      {/* 料理検索窓 */}
+      <DishSearch />
 
       {dishes && dishes?.length! > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
