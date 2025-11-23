@@ -16,11 +16,11 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl">
+    <div className="container mx-auto max-w-full">
       {/* 料理検索窓 */}
       <DishSearch />
 
-      {dishes && dishes?.length! > 0 ? (
+      {dishes && dishes.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
           {dishes?.map((dish) => (
             <DishCard key={dish.id} dish={dish} />
