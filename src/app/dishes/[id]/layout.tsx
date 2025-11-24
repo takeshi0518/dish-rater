@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DashboardLayout({
+export default function DishesDetailPageLayout({
   children,
 }: {
   children: React.ReactNode;
