@@ -21,14 +21,14 @@ export default async function DishesDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="container mx-auto max-w-6xl">
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div className="min-h-screen bg-gray-50 md:p-6 lg:flex lg:items-center lg:justify-center">
+      <div className="bg-white w-full md:max-w-3xl lg:max-w-7xl md:mx-auto md:rounded-lg md:shadow-sm lg:shrink-0">
         {/* モバイル:縦並び / PC:横並び */}
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col lg:flex-row">
           {/* 料理画像 */}
-          <div className="w-full md:w-1/2">
+          <div className="w-full lg:w-1/2">
             {dish.image_url ? (
-              <div className="relative w-full aspect-square">
+              <div className="relative w-full aspect-square md:rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none overflow-hidden">
                 <Image
                   src={dish.image_url}
                   alt={dish.name}
@@ -44,32 +44,40 @@ export default async function DishesDetailPage({ params }: Props) {
             )}
           </div>
 
-          {/* 料理詳細 */}
-          <div className="w-full md:w-1/2 p-6 md:p-8">
+          {/* 料理情報エリア */}
+          <div className="w-full lg:w-1/2">
+            {/* 投稿日時 */}
+            <div className="p-4 md:p-6">
+              <div className="flex items-center gap-2 text-gray-500">
+                <time className="text-sm">
+                  {new Date(dish.created_at).toLocaleDateString('ja-JP', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+              </div>
+            </div>
             {/* タイトルとレーティング */}
-            <div className="mb-6">
-              <h1 className="text-2xl md:text-3xl font-bold mb-3">
-                {dish.name}
-              </h1>
+            <div className="p-4 md:p-6">
+              <h1 className="text-2xl md:text-3xl mb-5">{dish.name}</h1>
               {dish.rating !== null && (
                 <div className="inline-flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-full">
-                  <span className="text-lg font-semibold">
-                    {dish.rating.toFixed(1)}
-                  </span>
+                  <span className="text-lg">{dish.rating.toFixed(1)}</span>
                 </div>
               )}
             </div>
-          </div>
 
-          {/* 説明文 */}
-          {dish.description && (
-            <div>
-              <h2 className="text-lg font-semibold mb-3">説明</h2>
-              <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                {dish.description}
-              </p>
-            </div>
-          )}
+            {/* 説明文 */}
+            {dish.description && (
+              <div className="p-4 md:p-6">
+                <h2 className="text-lg mb-3">説明</h2>
+                <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  {dish.description}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
