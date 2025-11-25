@@ -51,6 +51,7 @@ export default async function DishesDetailPage({ params }: Props) {
             {/* 投稿日時 */}
             <div className="p-4 md:p-6">
               <div className="flex items-center gap-2 text-gray-500">
+                <Icons.calendar className="w-4 h-4" />
                 <time className="text-sm">
                   {new Date(dish.created_at).toLocaleDateString('ja-JP', {
                     year: 'numeric',
@@ -65,7 +66,7 @@ export default async function DishesDetailPage({ params }: Props) {
               <h1 className="text-2xl md:text-3xl mb-5">{dish.name}</h1>
               {dish.rating !== null && (
                 <div className="inline-flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-full">
-                  
+                  <Icons.star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                   <span className="text-lg">{dish.rating.toFixed(1)}</span>
                 </div>
               )}
