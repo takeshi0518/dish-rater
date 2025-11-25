@@ -8,6 +8,21 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
+type Dish = {
+  id: string;
+  user_id: string;
+  name: string;
+  description: string | null;
+  image_url: string | null;
+  tags: string[] | null;
+  rating: number | null;
+  source_type: 'restaurant' | 'homemade' | 'other';
+  restaurant_name: string | null;
+  chef_name: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export default async function DishesDetailPage({ params }: Props) {
   const { id } = await params;
   const supabase = await createSupabaseServerClient();
@@ -16,7 +31,7 @@ export default async function DishesDetailPage({ params }: Props) {
     .from('dishes')
     .select('*')
     .eq('id', id)
-    .single();
+    .single<Dish>();
 
   if (error || !dish) {
     notFound();
@@ -64,6 +79,19 @@ export default async function DishesDetailPage({ params }: Props) {
             {/* タイトルとレーティング */}
             <div className="p-4 md:p-6">
               <h1 className="text-2xl md:text-3xl mb-5">{dish.name}</h1>
+
+              {/* 店名または作った人 */}
+              {dish.source_type === 'restaurant' && dish.restaurant_name && (
+                <p className="text-sm text-gray-600 mb-3">
+                  📍 {dish.restaurant_name}
+                </p>
+              )}
+              {dish.source_type === 'homemade' && dish.chef_name && (
+                <p className="text-sm text-gray-600 mb-3">
+                  👨‍🍳 {dish.chef_name}
+                </p>
+              )}
+
               {dish.rating !== null && (
                 <div className="inline-flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-full">
                   <Icons.star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -75,10 +103,28 @@ export default async function DishesDetailPage({ params }: Props) {
             {/* 説明文 */}
             {dish.description && (
               <div className="p-4 md:p-6">
-                <h2 className="text-lg mb-3">説明</h2>
                 <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
                   {dish.description}
                 </p>
+              </div>
+            )}
+
+            {/* タグ */}
+            {dish.tags && dish.tags.length > 0 && (
+              <div className="p-4 md:p-6">
+                <h3 className="text-sm font-semibold text-gray-600 mb-3">
+                  タグ
+                </h3>
+                <div className="flex gap-2 flex-wrap">
+                  {dish.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-orange-50 text-orange-600 rounded-full text-sm font-medium"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </div>

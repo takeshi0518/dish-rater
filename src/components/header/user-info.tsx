@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/Icon/icons';
-import { User } from '@/app/types/uset';
+import { User } from '@/app/types/user';
 
 type UserInfoProps = {
   user: User | null;

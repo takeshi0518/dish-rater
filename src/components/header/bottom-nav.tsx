@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 import Link from 'next/link';
 import { Icons } from '../Icon/icons';
-import { User } from '@/app/types/uset';
+import { User } from '@/app/types/user';
 
 type BottomNavProps = {
   user: User | null;
