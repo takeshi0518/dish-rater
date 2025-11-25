@@ -1,6 +1,8 @@
-import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
+
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 import Image from 'next/image';
+import { Icons } from '@/components/Icon/icons';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -63,6 +65,7 @@ export default async function DishesDetailPage({ params }: Props) {
               <h1 className="text-2xl md:text-3xl mb-5">{dish.name}</h1>
               {dish.rating !== null && (
                 <div className="inline-flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-full">
+                  
                   <span className="text-lg">{dish.rating.toFixed(1)}</span>
                 </div>
               )}
