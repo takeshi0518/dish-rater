@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { Icons } from '@/components/Icon/icons';
 
@@ -20,7 +22,7 @@ type DishDetailProps = {
   dish: Dish;
 };
 
-export default async function DishesDetailPage({ dish }: DishDetailProps) {
+export default function DishesDetail({ dish }: DishDetailProps) {
   return (
     <div className="min-h-screen bg-gray-50 md:p-6 lg:flex lg:items-center lg:justify-center">
       <div className="bg-white w-full md:max-w-3xl lg:max-w-7xl md:mx-auto md:rounded-lg md:shadow-sm lg:shrink-0">
