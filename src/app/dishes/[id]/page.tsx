@@ -2,13 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-
-import { Icons } from '@/components/Icon/icons';
 import { createClient } from '@/lib/supabase/client';
 import DishesDetail from '@/components/dish/dish-detail';
+import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
 
 type Dish = {
   id: string;
@@ -29,7 +25,7 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default function DishModalPage({ params }: Props) {
+export default function DishDetailPage({ params }: Props) {
   const router = useRouter();
   const [dish, setDish] = useState<Dish | null>(null);
   const [isOpen, setIsOpen] = useState(true);
@@ -74,30 +70,10 @@ export default function DishModalPage({ params }: Props) {
     return null;
   }
 
-  const handleShare = async () => {
-    const url = `${window.location.origin}/dishes/${id}`;
-
-    try {
-      await navigator.clipboard.writeText(url);
-      toast.success('リンクをコピーしました');
-    } catch (error) {
-      toast.error('コピーに失敗しました。');
-    }
-  };
-
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-7xl w-full p-0 mx-auto">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
-        {/* 共有ボタン */}
-        <Button
-          onClick={handleShare}
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-12 z-50 bg-white/90 hover:bg-white"
-        >
-          <Icons.share className="w-5 h-5" />
-        </Button>
         <DishesDetail dish={dish} />
       </DialogContent>
     </Dialog>

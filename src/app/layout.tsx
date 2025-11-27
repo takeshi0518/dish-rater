@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import type { Metadata } from 'next';
 import { Roboto_Mono } from 'next/font/google';
 import './globals.css';
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={roboto_mono.className}>{children}</body>
+      <body className={roboto_mono.className}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

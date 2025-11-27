@@ -11,6 +11,7 @@ import {
   Search,
   CalendarDays,
   Star,
+  Share2,
 } from 'lucide-react';
 
 type IconProps = React.ComponentProps<'svg'>;
@@ -78,4 +79,5 @@ export const Icons = {
   search: Search,
   calendar: CalendarDays,
   star: Star,
+  share: Share2,
 } as const;
