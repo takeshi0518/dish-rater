@@ -24,14 +24,14 @@ type DishDetailProps = {
 
 export default function DishesDetail({ dish }: DishDetailProps) {
   return (
-    <div className="min-h-screen bg-gray-50 md:p-6 lg:flex lg:items-center lg:justify-center">
-      <div className="bg-white w-full md:max-w-3xl lg:max-w-7xl md:mx-auto md:rounded-lg md:shadow-sm lg:shrink-0">
+    <div className="min-h-screen bg-gray-50 md:p-6">
+      <div className="bg-white w-full md:max-w-3xl md:mx-auto md:rounded-lg md:shadow-sm">
         {/* モバイル:縦並び / PC:横並び */}
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col">
           {/* 料理画像 */}
-          <div className="w-full lg:w-1/2">
+          <div className="w-full">
             {dish.image_url ? (
-              <div className="relative w-full aspect-square md:rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none overflow-hidden">
+              <div className="relative w-full aspect-square md:rounded-t-lg">
                 <Image
                   src={dish.image_url}
                   alt={dish.name}
