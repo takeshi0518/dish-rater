@@ -23,14 +23,31 @@ type Dish = {
 type DishDetailProps = {
   dish: Dish;
   onShare?: () => void;
+  onClose?: () => void;
 };
 
-export default function DishesDetail({ dish, onShare }: DishDetailProps) {
+export default function DishesDetail({
+  dish,
+  onShare,
+  onClose,
+}: DishDetailProps) {
   return (
     <div className="bg-white w-full md:max-w-3xl md:mx-auto md:rounded-lg md:shadow-sm">
       <div className="flex flex-col">
         {/* 料理画像 */}
         <div className="w-full relative">
+          {/* 閉じるボタン */}
+          {onClose && (
+            <Button
+              onClick={onClose}
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 left-4 bg-white/90 hover:bg-white z-10"
+            >
+              <Icons.close className="w-5 h-5" />
+            </Button>
+          )}
+          {/* 共有ボタン */}
           {onShare && (
             <Button
               onClick={onShare}

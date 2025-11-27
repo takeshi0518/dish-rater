@@ -89,7 +89,7 @@ export default function DishModalPage({ params }: Props) {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-7xl w-full p-0 mx-auto">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
-        <DishesDetail dish={dish} onShare={handleShare} />
+        <DishesDetail dish={dish} onShare={handleShare} onClose={handleClose} />
       </DialogContent>
     </Dialog>
   );
