@@ -89,16 +89,7 @@ export default function DishModalPage({ params }: Props) {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-7xl w-full p-0 mx-auto">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
-        {/* 共有ボタン */}
-        <Button
-          onClick={handleShare}
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-12 z-50 bg-white/90 hover:bg-white"
-        >
-          <Icons.share className="w-5 h-5" />
-        </Button>
-        <DishesDetail dish={dish} />
+        <DishesDetail dish={dish} onShare={handleShare} />
       </DialogContent>
     </Dialog>
   );
