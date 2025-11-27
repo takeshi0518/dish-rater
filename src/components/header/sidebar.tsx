@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { Icons } from '@/components/Icon/icons';
 import UserInfo from './user-info';
-import { User } from '@/app/types/uset';
+import { User } from '@/app/types/user';
 
 type SidebarProps = {
   user: User | null;

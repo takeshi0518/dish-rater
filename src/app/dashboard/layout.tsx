@@ -13,14 +13,17 @@ export const metadata: Metadata = {
 
 export default function DashboardLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col md:flex-row h-screen">
       <Navigation />
       <main className=" bg-gray-50 flex-1 overflow-auto p-2 pt-20 md:pt-6">
         {children}
+        {modal}
       </main>
     </div>
   );
