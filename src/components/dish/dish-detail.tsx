@@ -32,7 +32,7 @@ export default function DishesDetail({
   onClose,
 }: DishDetailProps) {
   return (
-    <div className="bg-white w-full md:max-w-3xl md:mx-auto md:rounded-lg md:shadow-sm">
+    <div className="bg-white w-full md:shadow-sm">
       <div className="flex flex-col">
         {/* 料理画像 */}
         <div className="w-full relative">
@@ -59,7 +59,7 @@ export default function DishesDetail({
             </Button>
           )}
           {dish.image_url ? (
-            <div className="relative w-full aspect-square md:rounded-t-lg">
+            <div className="relative w-full aspect-square">
               <Image
                 src={dish.image_url}
                 alt={dish.name}
@@ -76,12 +76,12 @@ export default function DishesDetail({
         </div>
 
         {/* 料理情報エリア */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-full">
           {/* 投稿日時 */}
           <div className="p-4 md:p-6">
             <div className="flex items-center gap-2 text-gray-500">
               <Icons.calendar className="w-4 h-4" />
-              <time className="text-sm">
+              <time className="text-sm md:text-base">
                 {new Date(dish.created_at).toLocaleDateString('ja-JP', {
                   year: 'numeric',
                   month: 'long',
@@ -92,16 +92,16 @@ export default function DishesDetail({
           </div>
           {/* タイトルとレーティング */}
           <div className="p-4 md:p-6">
-            <h1 className="text-2xl md:text-3xl mb-5">{dish.name}</h1>
+            <h1 className="text-2xl md:text-3xl mb-4">{dish.name}</h1>
 
             {/* 店名または作った人 */}
             {dish.source_type === 'restaurant' && dish.restaurant_name && (
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-gray-600 mb-2">
                 📍 {dish.restaurant_name}
               </p>
             )}
             {dish.source_type === 'homemade' && dish.chef_name && (
-              <p className="text-sm text-gray-600 mb-3">👨‍🍳 {dish.chef_name}</p>
+              <p className="text-sm text-gray-600 mb-2">👨‍🍳 {dish.chef_name}</p>
             )}
 
             {dish.rating !== null && (

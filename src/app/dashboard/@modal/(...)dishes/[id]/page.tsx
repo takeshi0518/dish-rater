@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
-import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 
-import { Icons } from '@/components/Icon/icons';
 import { createClient } from '@/lib/supabase/client';
 import DishesDetail from '@/components/dish/dish-detail';
 
@@ -87,7 +85,7 @@ export default function DishModalPage({ params }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-7xl w-full p-0 mx-auto">
+      <DialogContent className="max-w-3xl w-full p-0 max-h-[95vh] overflow-y-auto">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
         <DishesDetail dish={dish} onShare={handleShare} onClose={handleClose} />
       </DialogContent>
