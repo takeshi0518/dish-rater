@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 
 import { Icons } from '@/components/Icon/icons';
+import { useState } from 'react';
 
 type Dish = {
   id: string;
@@ -31,6 +32,11 @@ export default function DishesDetail({
   onShare,
   onClose,
 }: DishDetailProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const MAX_LENGTH = 60;
+  const shouldTruncate =
+    dish.description && dish.description.length > MAX_LENGTH;
+
   return (
     <div className="bg-white w-full md:shadow-sm">
       <div className="flex flex-col">
@@ -116,8 +122,19 @@ export default function DishesDetail({
           {dish.description && (
             <div className="p-4 md:p-6">
               <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                {dish.description}
+                {isExpanded || !shouldTruncate
+                  ? dish.description
+                  : `${dish.description.slice(0, MAX_LENGTH)}...`}
               </p>
+
+              {shouldTruncate && (
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="text-sm font-medium text-muted-foreground"
+                >
+                  {isExpanded ? '閉じる' : '続きを読む'}
+                </button>
+              )}
             </div>
           )}
 
