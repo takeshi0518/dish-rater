@@ -2,24 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
-import DishesDetail from '@/components/dish/dish-detail';
 import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
 
-type Dish = {
-  id: string;
-  user_id: string;
-  name: string;
-  description: string | null;
-  image_url: string | null;
-  tags: string[] | null;
-  rating: number | null;
-  source_type: 'restaurant' | 'homemade' | 'other';
-  restaurant_name: string | null;
-  chef_name: string | null;
-  created_at: string;
-  updated_at: string;
-};
+import DishesDetail from '@/components/dish/dish-detail';
+import { createClient } from '@/lib/supabase/client';
+import { Dish } from '@/app/types/dish';
 
 type Props = {
   params: Promise<{ id: string }>;

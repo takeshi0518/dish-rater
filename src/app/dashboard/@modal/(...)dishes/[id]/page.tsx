@@ -7,21 +7,7 @@ import { toast } from 'sonner';
 
 import { createClient } from '@/lib/supabase/client';
 import DishesDetail from '@/components/dish/dish-detail';
-
-type Dish = {
-  id: string;
-  user_id: string;
-  name: string;
-  description: string | null;
-  image_url: string | null;
-  tags: string[] | null;
-  rating: number | null;
-  source_type: 'restaurant' | 'homemade' | 'other';
-  restaurant_name: string | null;
-  chef_name: string | null;
-  created_at: string;
-  updated_at: string;
-};
+import { Dish } from '@/app/types/dish';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -85,7 +71,7 @@ export default function DishModalPage({ params }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-3xl w-full p-0 max-h-[95vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl w-full p-0 max-h-[95vh] overflow-y-auto rounded-none">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
         <DishesDetail dish={dish} onShare={handleShare} onClose={handleClose} />
       </DialogContent>
