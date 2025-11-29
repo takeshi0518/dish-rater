@@ -1,81 +1,46 @@
-'use client';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import DishesDetail from '@/components/dish/dish-detail';
-import { Dialog, DialogContent, DialogTitle } from '@radix-ui/react-dialog';
-
-type Dish = {
-  id: string;
-  user_id: string;
-  name: string;
-  description: string | null;
-  image_url: string | null;
-  tags: string[] | null;
-  rating: number | null;
-  source_type: 'restaurant' | 'homemade' | 'other';
-  restaurant_name: string | null;
-  chef_name: string | null;
-  created_at: string;
-  updated_at: string;
-};
+import { Dish } from '@/app/types/dish';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { Icons } from '@/components/Icon/icons';
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default function DishDetailPage({ params }: Props) {
-  const router = useRouter();
-  const [dish, setDish] = useState<Dish | null>(null);
-  const [isOpen, setIsOpen] = useState(true);
-  const [id, setId] = useState<string>('');
+export default async function DishDetailPage({ params }: Props) {
+  const { id } = await params;
+  const supabase = await createSupabaseServerClient();
 
-  useEffect(() => {
-    const fetchParams = async () => {
-      const { id } = await params;
-      setId(id);
-    };
-    fetchParams();
-  }, [params]);
+  const { data: dish, error } = await supabase
+    .from('dishes')
+    .select('*')
+    .eq('id', id)
+    .single<Dish>();
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchDish = async () => {
-      const supabase = await createClient();
-      const { data, error } = await supabase
-        .from('dishes')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error || !data) {
-        router.push('/dashboard');
-        return;
-      }
-
-      setDish(data);
-    };
-
-    fetchDish();
-  }, [id, router]);
-
-  const handleClose = () => {
-    setIsOpen(false);
-    router.back();
-  };
-
-  if (!dish) {
-    return null;
+  if (error || !dish) {
+    notFound();
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-7xl w-full p-0 mx-auto">
-        <DialogTitle className="sr-only">料理の詳細</DialogTitle>
+    <div className="container bg-gray-50">
+      {/* 戻るボタン */}
+      <div>
+        <Link href="/dashboard">
+          <Button variant="ghost" className="mb-4">
+            <Icons.arrowLeft className="w-4 h-4 mr-2" />
+            ダッシュボードに戻る
+          </Button>
+        </Link>
+      </div>
+
+      {/* 詳細コンテンツ */}
+      <div className="container mx-auto max-w-2xl">
         <DishesDetail dish={dish} />
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 }
