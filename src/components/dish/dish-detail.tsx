@@ -122,7 +122,7 @@ function DishDescription({ description }: { description: string | null }) {
           {shouldTruncate && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-sm font-medium text-muted-foreground"
+              className="text-sm font-medium text-muted-foreground cursor-pointer"
             >
               {isExpanded ? '閉じる' : '続きを読む'}
             </button>
