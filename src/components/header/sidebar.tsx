@@ -75,7 +75,7 @@ export default function Sidebar({ user }: SidebarProps) {
               {/* ログイン */}
               <li>
                 <Link
-                  href="/Login"
+                  href="/login"
                   className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
                     pathname === '/login'
                       ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
