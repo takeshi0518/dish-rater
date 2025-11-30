@@ -30,7 +30,7 @@ function DishImage({
           onClick={onClose}
           variant="ghost"
           size="icon"
-          className="absolute top-4 left-4 bg-white/90 hover:bg-white z-10"
+          className="absolute top-4 left-4 bg-white/90 hover:bg-white z-10 cursor-pointer"
         >
           <Icons.close className="w-5 h-5" />
         </Button>
@@ -41,7 +41,7 @@ function DishImage({
           onClick={onShare}
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 bg-white/90 hover:bg-white"
+          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
         >
           <Icons.share className="w-5 h-5" />
         </Button>
