@@ -17,37 +17,39 @@ export default function DishModalPage({ params }: Props) {
   const router = useRouter();
   const [dish, setDish] = useState<Dish | null>(null);
   const [isOpen, setIsOpen] = useState(true);
+  const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [id, setId] = useState<string>('');
 
   useEffect(() => {
-    const fetchParams = async () => {
+    const fetchData = async () => {
       const { id } = await params;
-      setId(id);
-    };
-    fetchParams();
-  }, [params]);
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchDish = async () => {
       const supabase = await createClient();
-      const { data, error } = await supabase
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      const { data: dishData, error } = await supabase
         .from('dishes')
         .select('*')
         .eq('id', id)
         .single();
 
-      if (error || !data) {
+      if (error || !dishData) {
         router.push('/dashboard');
         return;
       }
 
-      setDish(data);
+      const isOwn = user?.id === dishData.user_id;
+
+      setDish(dishData);
+      setIsOwnProfile(isOwn);
+      setId(id);
     };
 
-    fetchDish();
-  }, [id, router]);
+    fetchData();
+  }, [params, router]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -73,7 +75,12 @@ export default function DishModalPage({ params }: Props) {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-3xl w-full p-0 max-h-[95vh] overflow-y-auto rounded-none">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
-        <DishesDetail dish={dish} onShare={handleShare} onClose={handleClose} />
+        <DishesDetail
+          dish={dish}
+          onShare={handleShare}
+          onClose={handleClose}
+          isEditable={isOwnProfile}
+        />
       </DialogContent>
     </Dialog>
   );

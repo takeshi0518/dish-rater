@@ -11,16 +11,19 @@ type DishDetailProps = {
   dish: Dish;
   onShare?: () => void;
   onClose?: () => void;
+  isEditable: boolean;
 };
 
 function DishImage({
   dish,
   onShare,
   onClose,
+  isEditable,
 }: {
   dish: Dish;
   onShare?: () => void;
   onClose?: () => void;
+  isEditable: boolean;
 }) {
   return (
     <div className="w-full relative">
@@ -35,13 +38,24 @@ function DishImage({
           <Icons.close className="w-5 h-5" />
         </Button>
       )}
+      {/* 編集ボタン */}
+      {isEditable && (
+        <Button
+          // onClick={編集モードに切り替え}
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
+        >
+          <Icons.edit className="w-5 h-5" />
+        </Button>
+      )}
       {/* 共有ボタン */}
       {onShare && (
         <Button
           onClick={onShare}
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
+          className="absolute top-16 right-4 bg-white/90 hover:bg-white cursor-pointer"
         >
           <Icons.share className="w-5 h-5" />
         </Button>
@@ -159,12 +173,18 @@ export default function DishesDetail({
   dish,
   onShare,
   onClose,
+  isEditable,
 }: DishDetailProps) {
   return (
     <div className="bg-white w-full md:shadow-sm">
       <div className="flex flex-col">
         {/* 料理画像 */}
-        <DishImage dish={dish} onShare={onShare} onClose={onClose} />
+        <DishImage
+          dish={dish}
+          onShare={onShare}
+          onClose={onClose}
+          isEditable={isEditable}
+        />
         <div className="w-full">
           {/* 料理情報*/}
           <DishInfo dish={dish} />

@@ -14,6 +14,7 @@ import {
   Share2,
   X,
   ArrowLeft,
+  SquarePen,
 } from 'lucide-react';
 
 type IconProps = React.ComponentProps<'svg'>;
@@ -84,4 +85,5 @@ export const Icons = {
   share: Share2,
   close: X,
   arrowLeft: ArrowLeft,
+  edit: SquarePen,
 } as const;
