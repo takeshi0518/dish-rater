@@ -1,3 +1,4 @@
+import DishCard from '@/components/dish/dish-card';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 
@@ -84,15 +85,22 @@ export default async function ProfilePage({ params }: Props) {
       </div>
 
       {/* 投稿グリッド */}
-      <div className="grid grid-cols-3 gap-1">
-        {dishes?.map((dish) => (
-          <div key={dish.id} className="aspect-square bg-gray-200">
-            <div className="w-full h-full flex items-center justify-center">
-              {dish.name}
-            </div>
-          </div>
-        ))}
-      </div>
+      {dishes && dishes.length > 0 ? (
+        <div className="grid grid-cols-3 gap-1">
+          {dishes.map((dish) => (
+            <DishCard key={dish.id} dish={dish} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16">
+          <p className="text-gray-500">まだ投稿がありません</p>
+          {isOwnProfile && (
+            <p className="text-gray-400 mt-2">
+              最初の料理を投稿してみませんか？
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
