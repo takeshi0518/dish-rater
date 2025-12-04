@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Navigation from '../../components/header/navigation';
+import Navigation from '../../../components/header/navigation';
 
 export const metadata: Metadata = {
   title: 'みんなの料理 | dish-rater',
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DashboardLayout({
+export default function ProfileLayout({
   children,
   modal,
 }: {

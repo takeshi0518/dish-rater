@@ -33,9 +33,9 @@ function MyPage({ pathname }: { pathname: string }) {
   return (
     <li>
       <Link
-        href="/dashboard/my-dishes"
+        href="/my-page"
         className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
-          pathname === '/dashboard/my-dishes'
+          pathname === '/my-page'
             ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
             : 'hover:bg-amber-200'
         }`}
@@ -51,9 +51,9 @@ function Profile({ pathname }: { pathname: string }) {
   return (
     <li>
       <Link
-        href="/dashboard/profile"
+        href="/profile"
         className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
-          pathname === '/dashboard/profile'
+          pathname === '/profile'
             ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
             : 'hover:bg-amber-200'
         }`}
