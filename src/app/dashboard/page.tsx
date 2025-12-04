@@ -21,7 +21,7 @@ export default async function DashboardPage() {
       <DishSearch />
 
       {dishes && dishes.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-0.5">
           {dishes?.map((dish) => (
             <DishCard key={dish.id} dish={dish} />
           ))}
