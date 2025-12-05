@@ -30,14 +30,17 @@ function Home({ pathname }: { pathname: string }) {
 }
 
 function Profile({ pathname, userId }: { pathname: string; userId: string }) {
+  const isActive = pathname.startsWith('/profile');
   return (
     <li>
       <Link
         href={`/profile/${userId}`}
         className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
-          pathname === `/profile/${userId}`
+          isActive
             ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
             : 'hover:bg-amber-200'
+        }
+            
         }`}
       >
         <Icons.myPage size={20} strokeWidth={1.5} />
