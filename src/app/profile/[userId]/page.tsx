@@ -5,6 +5,7 @@ import { Icons } from '@/components/Icon/icons';
 import { Button } from '@/components/ui/button';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
+import { ProfileBio } from '@/components/profile/profile-bio';
 
 type Props = {
   params: {
@@ -99,9 +100,9 @@ export default async function ProfilePage({ params }: Props) {
             </div>
 
             {/* 自己紹介 */}
-            {profile.bio && <p>{profile.bio}</p>}
           </div>
         </div>
+        {profile.bio && <ProfileBio bio={profile.bio} />}
       </div>
 
       {/* 投稿グリッド */}
