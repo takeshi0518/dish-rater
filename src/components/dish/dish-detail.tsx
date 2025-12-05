@@ -44,7 +44,7 @@ function DishImage({
           // onClick={編集モードに切り替え}
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
+          className="absolute top-16 right-4 bg-white/90 hover:bg-white cursor-pointer"
         >
           <Icons.edit className="w-5 h-5" />
         </Button>
@@ -55,7 +55,7 @@ function DishImage({
           onClick={onShare}
           variant="ghost"
           size="icon"
-          className="absolute top-16 right-4 bg-white/90 hover:bg-white cursor-pointer"
+          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
         >
           <Icons.share className="w-5 h-5" />
         </Button>
