@@ -39,12 +39,12 @@ export default async function ProfilePage({ params }: Props) {
     .order('created_at', { ascending: false });
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       {/* プロフィールヘッダー */}
       <div className="mb-6 p-4">
         <div className="flex items-center gap-4 mb-4">
           {/* アバター */}
-          <div className="w-40 h-40 rounded-full bg-gray-200 flex items-center justify-center">
+          <div className="w-28 sm:w-35 h-28 sm:h-35 rounded-full bg-gray-200 flex items-center justify-center">
             {profile.avatar_url ? (
               <Image
                 src={profile.avatar_url}
@@ -53,7 +53,7 @@ export default async function ProfilePage({ params }: Props) {
                 className="rounded-full object-cover"
               />
             ) : (
-              <Icons.userIcon className="w-20 h-20 text-gray-400" />
+              <Icons.userIcon className="w-10 h-10 text-gray-400" />
             )}
           </div>
 
@@ -65,7 +65,7 @@ export default async function ProfilePage({ params }: Props) {
               <Button
                 size="sm"
                 variant="outline"
-                className="h-8 px-4 text-sm font-semibold cursor-pointer"
+                className="h-8  px-4 text-xs cursor-pointer"
               >
                 <Icons.edit className="w-4 h-4" />
                 プロフィールを編集
