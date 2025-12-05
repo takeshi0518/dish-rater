@@ -29,41 +29,41 @@ function Home({ pathname }: { pathname: string }) {
   );
 }
 
-function MyPage({ pathname }: { pathname: string }) {
+function Profile({ pathname, userId }: { pathname: string; userId: string }) {
   return (
     <li>
       <Link
-        href="/my-page"
+        href={`/profile/${userId}`}
         className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
-          pathname === '/my-page'
+          pathname === `/profile/${userId}`
             ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
             : 'hover:bg-amber-200'
         }`}
       >
         <Icons.myPage size={20} strokeWidth={1.5} />
-        <span className="font-medium">My Page</span>
-      </Link>
-    </li>
-  );
-}
-
-function Profile({ pathname }: { pathname: string }) {
-  return (
-    <li>
-      <Link
-        href="/profile"
-        className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
-          pathname === '/profile'
-            ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
-            : 'hover:bg-amber-200'
-        }`}
-      >
-        <Icons.profile size={20} strokeWidth={1.5} />
         <span className="font-medium">Profile</span>
       </Link>
     </li>
   );
 }
+
+// function Profile({ pathname }: { pathname: string }) {
+//   return (
+//     <li>
+//       <Link
+//         href="/profile"
+//         className={`flex items-center gap-2 p-3  text-sm md:text-base transition-colors ${
+//           pathname === '/profile'
+//             ? 'border-l-4 border-orange-500 bg-amber-200 font-semibold'
+//             : 'hover:bg-amber-200'
+//         }`}
+//       >
+//         <Icons.profile size={20} strokeWidth={1.5} />
+//         <span className="font-medium">Profile</span>
+//       </Link>
+//     </li>
+//   );
+// }
 
 function Login({ pathname }: { pathname: string }) {
   return (
@@ -117,10 +117,10 @@ export default function Sidebar({ user }: SidebarProps) {
           <Home pathname={pathname} />
           {user ? (
             <>
-              {/* マイページ */}
-              <MyPage pathname={pathname} />
+              {/* プロフィール*/}
+              <Profile pathname={pathname} userId={user?.id} />
               {/* プロフィール */}
-              <Profile pathname={pathname} />
+              {/* <Profile pathname={pathname} /> */}
             </>
           ) : (
             <>
