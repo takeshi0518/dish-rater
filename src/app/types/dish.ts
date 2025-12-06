@@ -13,6 +13,13 @@ export type Dish = {
   updated_at: string;
 };
 
+export type DishWithProfile = Dish & {
+  profiles: {
+    username: string;
+    avatar_url: string | null;
+  } | null;
+};
+
 export type Profile = {
   id: string;
   username: string;
