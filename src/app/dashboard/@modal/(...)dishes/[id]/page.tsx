@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 import { createClient } from '@/lib/supabase/client';
 import DishesDetail from '@/components/dish/dish-detail';
-import { Dish } from '@/app/types/dish';
+import { DishWithProfile } from '@/app/types/dish';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -15,7 +15,7 @@ type Props = {
 
 export default function DishModalPage({ params }: Props) {
   const router = useRouter();
-  const [dish, setDish] = useState<Dish | null>(null);
+  const [dish, setDish] = useState<DishWithProfile | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [id, setId] = useState<string>('');
@@ -32,7 +32,9 @@ export default function DishModalPage({ params }: Props) {
 
       const { data: dishData, error } = await supabase
         .from('dishes')
-        .select('*')
+        .select(
+          '*, profiles!dishes_user_id_profiles_fkey(username, avatar_url)'
+        )
         .eq('id', id)
         .single();
 
@@ -80,6 +82,8 @@ export default function DishModalPage({ params }: Props) {
           onShare={handleShare}
           onClose={handleClose}
           isEditable={isOwnProfile}
+          userName={dish.profiles?.username}
+          avatarUrl={dish.profiles?.avatar_url}
         />
       </DialogContent>
     </Dialog>

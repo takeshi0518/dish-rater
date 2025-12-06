@@ -12,6 +12,8 @@ type DishDetailProps = {
   onShare?: () => void;
   onClose?: () => void;
   isEditable: boolean;
+  userName?: string;
+  avatarUrl?: string | null;
 };
 
 function DishImage({
@@ -174,7 +176,10 @@ export default function DishesDetail({
   onShare,
   onClose,
   isEditable,
+  userName,
+  avatarUrl,
 }: DishDetailProps) {
+  console.log(userName);
   return (
     <div className="bg-white w-full md:shadow-sm">
       <div className="flex flex-col">
