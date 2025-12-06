@@ -15,8 +15,8 @@ export type Dish = {
 
 export type DishWithProfile = Dish & {
   profiles: {
-    username: string;
-    avatar_url: string | null;
+    username?: string;
+    avatar_url?: string | null;
   } | null;
 };
 
