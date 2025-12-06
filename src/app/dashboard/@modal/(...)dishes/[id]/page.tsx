@@ -32,7 +32,15 @@ export default function DishModalPage({ params }: Props) {
 
       const { data: dishData, error } = await supabase
         .from('dishes')
-        .select('*')
+        .select(
+          `
+          *,
+          profiles (
+            username,
+            avatar_url
+          )
+          `
+        )
         .eq('id', id)
         .single();
 
