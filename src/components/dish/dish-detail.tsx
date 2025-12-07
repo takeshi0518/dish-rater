@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 
 import { Icons } from '@/components/Icon/icons';
 import { Dish } from '@/app/types/dish';
+import Link from 'next/link';
 
 type DishDetailProps = {
   dish: Dish;
@@ -15,6 +16,42 @@ type DishDetailProps = {
   userName?: string;
   avatarUrl?: string | null;
 };
+
+function DishUserInfo({
+  dish,
+  username,
+  avatarUrl,
+}: {
+  dish: Dish;
+  username?: string;
+  avatarUrl?: string | null;
+}) {
+  if (!username) return null;
+
+  return (
+    <div className="p-4 border-b">
+      <Link
+        href={`/profile/${dish.user_id}`}
+        className="flex items-center gap-3 hover:opacity-70 transition-opacity"
+      >
+        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+          {avatarUrl ? (
+            <Image
+              src={avatarUrl}
+              alt={username}
+              width={40}
+              height={40}
+              className="object-cover"
+            />
+          ) : (
+            <Icons.userIcon className="w-6 h-6 text-gray-400" />
+          )}
+        </div>
+        <span className="font-semibold text-sm">{username}</span>
+      </Link>
+    </div>
+  );
+}
 
 function DishImage({
   dish,
@@ -191,6 +228,7 @@ export default function DishesDetail({
           isEditable={isEditable}
         />
         <div className="w-full">
+          <DishUserInfo dish={dish} username={userName} avatarUrl={avatarUrl} />
           {/* 料理情報*/}
           <DishInfo dish={dish} />
           {/* 説明文 */}
