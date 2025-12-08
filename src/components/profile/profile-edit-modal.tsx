@@ -7,8 +7,11 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import type { Profile } from '@/app/types/dish';
 import { Label } from '../ui/label';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 import { Icons } from '../Icon/icons';
+import { createClient } from '@/lib/supabase/client';
 
 type ProfileEditModalProps = {
   isOpen: boolean;
@@ -21,6 +24,7 @@ export default function ProfileEditModal({
   onClose,
   profile,
 }: ProfileEditModalProps) {
+  const router = useRouter();
   const [username, setUserName] = useState(profile.username);
   const [bio, setBio] = useState(profile.bio);
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url);
@@ -30,8 +34,37 @@ export default function ProfileEditModal({
     e.preventDefault();
     setIsLoading(true);
 
-    setIsLoading(false);
-    onClose();
+    try {
+      const supabase = await createClient();
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          username: username,
+          bio: bio,
+          avatar_url: avatarUrl || null,
+        })
+        .eq('id', profile.id);
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success('プロフィールを更新しました');
+      onClose();
+
+      router.refresh();
+    } catch (error: any) {
+      console.error('更新エラー', error);
+
+      if (error.code === '23505') {
+        toast.error('このユーザー名は既に使用されています');
+      } else {
+        toast.error('更新に失敗しました');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
