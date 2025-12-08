@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 
@@ -7,6 +8,7 @@ import { Icons } from '../Icon/icons';
 import { ProfileBio } from './profile-bio';
 import DishCard from '../dish/dish-card';
 import { Profile, Dish } from '@/app/types/dish';
+import ProfileEditModal from './profile-edit-modal';
 
 type ProfileContentProps = {
   profile: Profile;
@@ -19,6 +21,7 @@ export default function ProfileContent({
   dishes,
   isOwnProfile,
 }: ProfileContentProps) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   return (
     <div className="max-w-7xl mx-auto">
       {/* プロフィールヘッダー */}
@@ -47,6 +50,7 @@ export default function ProfileContent({
                 size="sm"
                 variant="outline"
                 className="h-8  px-4 text-xs cursor-pointer"
+                onClick={() => setIsEditModalOpen(true)}
               >
                 <Icons.edit className="w-4 h-4" />
                 プロフィールを編集
@@ -103,6 +107,12 @@ export default function ProfileContent({
           )}
         </div>
       )}
+
+      <ProfileEditModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        profile={profile}
+      />
     </div>
   );
 }
