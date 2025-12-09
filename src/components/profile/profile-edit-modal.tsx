@@ -28,7 +28,22 @@ export default function ProfileEditModal({
   const [username, setUserName] = useState(profile.username);
   const [bio, setBio] = useState(profile.bio);
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url);
+
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
+
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatarFile(file);
+
+      const preview = URL.createObjectURL(file);
+      setPreviewUrl(preview);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,15 +112,54 @@ export default function ProfileEditModal({
           </div>
           {/* Avatar URL */}
           <div className="space-y-2">
-            <Label htmlFor="avatarUrl">プロフィール画像URL</Label>
-            <Input
-              id="avatarUrl"
-              type="url"
-              value={avatarUrl!}
-              onChange={(e) => setAvatarUrl(e.target.value)}
-              placeholder="https://example.com/avatar.jpg"
-            />
+            <Label htmlFor="avatarUrl">プロフィール画像</Label>
+            <div className="flex gap-2 mb-2">
+              <Button
+                type="button"
+                variant={uploadMode === 'upload' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setUploadMode('upload')}
+              >
+                ファイルをアップロード
+              </Button>
+              <Button
+                type="button"
+                variant={uploadMode === 'url' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setUploadMode('url')}
+              >
+                URLを入力
+              </Button>
+            </div>
+            {uploadMode === 'upload' && (
+              <div className="space-y-2">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+
+                {previewUrl && (
+                  <div className="mt-2">
+                    <img
+                      src={previewUrl}
+                      alt="preview"
+                      className="w-32 h-32 rounded-full object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+            {uploadMode === 'url' && (
+              <Input
+                type="url"
+                value={avatarUrl!}
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                placeholder="https://example.com/avatar.jpg"
+              />
+            )}
           </div>
+
           {/* Button */}
           <div className="flex justify-end gap-2 pt-4">
             <Button
