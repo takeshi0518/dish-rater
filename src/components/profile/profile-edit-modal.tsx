@@ -28,7 +28,22 @@ export default function ProfileEditModal({
   const [username, setUserName] = useState(profile.username);
   const [bio, setBio] = useState(profile.bio);
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url);
+
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
+
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatarFile(file);
+
+      const preview = URL.createObjectURL(file);
+      setPreviewUrl(preview);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
