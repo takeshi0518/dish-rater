@@ -112,15 +112,54 @@ export default function ProfileEditModal({
           </div>
           {/* Avatar URL */}
           <div className="space-y-2">
-            <Label htmlFor="avatarUrl">プロフィール画像URL</Label>
-            <Input
-              id="avatarUrl"
-              type="url"
-              value={avatarUrl!}
-              onChange={(e) => setAvatarUrl(e.target.value)}
-              placeholder="https://example.com/avatar.jpg"
-            />
+            <Label htmlFor="avatarUrl">プロフィール画像</Label>
+            <div className="flex gap-2 mb-2">
+              <Button
+                type="button"
+                variant={uploadMode === 'upload' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setUploadMode('upload')}
+              >
+                ファイルをアップロード
+              </Button>
+              <Button
+                type="button"
+                variant={uploadMode === 'url' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setUploadMode('url')}
+              >
+                URLを入力
+              </Button>
+            </div>
+            {uploadMode === 'upload' && (
+              <div className="space-y-2">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+
+                {previewUrl && (
+                  <div className="mt-2">
+                    <img
+                      src={previewUrl}
+                      alt="preview"
+                      className="w-32 h-32 rounded-full object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+            {uploadMode === 'url' && (
+              <Input
+                type="url"
+                value={avatarUrl!}
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                placeholder="https://example.com/avatar.jpg"
+              />
+            )}
           </div>
+
           {/* Button */}
           <div className="flex justify-end gap-2 pt-4">
             <Button
