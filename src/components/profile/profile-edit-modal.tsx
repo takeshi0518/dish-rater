@@ -26,8 +26,8 @@ export default function ProfileEditModal({
 }: ProfileEditModalProps) {
   const router = useRouter();
   const [username, setUserName] = useState(profile.username);
-  const [bio, setBio] = useState(profile.bio);
-  const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url);
+  const [bio, setBio] = useState(profile.bio || '');
+  const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url || '');
 
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
