@@ -140,7 +140,7 @@ export default function ProfileEditModal({
                 />
 
                 {previewUrl && (
-                  <div className="mt-2">
+                  <div className="mt-2 flex justify-center">
                     <img
                       src={previewUrl}
                       alt="preview"
