@@ -51,13 +51,35 @@ export default function ProfileEditModal({
 
     try {
       const supabase = await createClient();
+      let finalAvatarUrl = avatarUrl;
+
+      if (uploadMode === 'upload' && avatarFile) {
+        const fileExt = avatarFile.name.split('.').pop();
+        const fileName = `${profile.id}/avatar.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, avatarFile, {
+            upsert: true,
+          });
+
+        if (uploadError) {
+          throw uploadError;
+        }
+
+        const { data: urlData } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+
+        finalAvatarUrl = urlData.publicUrl;
+      }
 
       const { error } = await supabase
         .from('profiles')
         .update({
           username: username,
           bio: bio,
-          avatar_url: avatarUrl || null,
+          avatar_url: finalAvatarUrl || null,
         })
         .eq('id', profile.id);
 

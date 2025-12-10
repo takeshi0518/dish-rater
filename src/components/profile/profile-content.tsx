@@ -28,7 +28,7 @@ export default function ProfileContent({
       <div className="mb-6 p-4">
         <div className="flex items-center gap-4 mb-4">
           {/* アバター */}
-          <div className="w-28 sm:w-35 h-28 sm:h-35 rounded-full bg-gray-200 flex items-center justify-center">
+          <div className="relative w-28 sm:w-35 h-28 sm:h-35 rounded-full bg-gray-200 flex items-center justify-center">
             {profile.avatar_url ? (
               <Image
                 src={profile.avatar_url}
