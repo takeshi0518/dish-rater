@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Navigation from '../../components/header/navigation';
+import { CreateDishButton } from '@/components/CreateDishButton';
 
 export const metadata: Metadata = {
   title: 'みんなの料理 | dish-rater',
@@ -25,6 +26,7 @@ export default function DashboardLayout({
         {children}
         {modal}
       </main>
+      <CreateDishButton />
     </div>
   );
 }
