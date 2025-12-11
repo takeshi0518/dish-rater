@@ -103,6 +103,21 @@ export default function ProfileEditModal({
       setIsLoading(false);
     }
   };
+
+  function UserNameInput() {
+    return (
+      <div className="space-y-2">
+        <Label htmlFor="username">ユーザー名</Label>
+        <Input
+          id="username"
+          value={username}
+          onChange={(e) => setUserName(e.target.value)}
+          placeholder="username"
+          required
+        />
+      </div>
+    );
+  }
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -111,16 +126,7 @@ export default function ProfileEditModal({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           {/* Username */}
-          <div className="space-y-2">
-            <Label htmlFor="username">ユーザー名</Label>
-            <Input
-              id="username"
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder="username"
-              required
-            />
-          </div>
+          <UserNameInput />
           {/* Bio */}
           <div className="space-y-2">
             <Label htmlFor="bio">自己紹介</Label>
