@@ -133,6 +133,58 @@ export default function ProfileEditModal({
       </div>
     );
   }
+
+  function AvatarUrlInput() {
+    return (
+      <>
+        <div className="space-y-2">
+          <Label htmlFor="avatarUrl">プロフィール画像</Label>
+          <div className="flex gap-2 mb-2">
+            <Button
+              type="button"
+              variant={uploadMode === 'upload' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setUploadMode('upload')}
+            >
+              ファイルをアップロード
+            </Button>
+            <Button
+              type="button"
+              variant={uploadMode === 'url' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setUploadMode('url')}
+            >
+              URLを入力
+            </Button>
+          </div>
+          {uploadMode === 'upload' && (
+            <div className="space-y-2">
+              <Input type="file" accept="image/*" onChange={handleFileChange} />
+
+              {previewUrl && (
+                <div className="mt-2 flex justify-center">
+                  <img
+                    src={previewUrl}
+                    alt="preview"
+                    className="w-32 h-32 rounded-full object-cover"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          {uploadMode === 'url' && (
+            <Input
+              type="url"
+              value={avatarUrl!}
+              onChange={(e) => setAvatarUrl(e.target.value)}
+              placeholder="https://example.com/avatar.jpg"
+            />
+          )}
+        </div>
+      </>
+    );
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -143,57 +195,9 @@ export default function ProfileEditModal({
           {/* Username */}
           <UserNameInput />
           {/* Bio */}
-
+          <BioInput />
           {/* Avatar URL */}
-          <div className="space-y-2">
-            <Label htmlFor="avatarUrl">プロフィール画像</Label>
-            <div className="flex gap-2 mb-2">
-              <Button
-                type="button"
-                variant={uploadMode === 'upload' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setUploadMode('upload')}
-              >
-                ファイルをアップロード
-              </Button>
-              <Button
-                type="button"
-                variant={uploadMode === 'url' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setUploadMode('url')}
-              >
-                URLを入力
-              </Button>
-            </div>
-            {uploadMode === 'upload' && (
-              <div className="space-y-2">
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                />
-
-                {previewUrl && (
-                  <div className="mt-2 flex justify-center">
-                    <img
-                      src={previewUrl}
-                      alt="preview"
-                      className="w-32 h-32 rounded-full object-cover"
-                    />
-                  </div>
-                )}
-              </div>
-            )}
-            {uploadMode === 'url' && (
-              <Input
-                type="url"
-                value={avatarUrl!}
-                onChange={(e) => setAvatarUrl(e.target.value)}
-                placeholder="https://example.com/avatar.jpg"
-              />
-            )}
-          </div>
-
+          <AvatarUrlInput />
           {/* Button */}
           <div className="flex justify-end gap-2 pt-4">
             <Button
