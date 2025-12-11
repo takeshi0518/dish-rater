@@ -118,6 +118,21 @@ export default function ProfileEditModal({
       </div>
     );
   }
+
+  function BioInput() {
+    return (
+      <div className="space-y-2">
+        <Label htmlFor="bio">自己紹介</Label>
+        <Textarea
+          id="bio"
+          value={bio!}
+          onChange={(e) => setBio(e.target.value)}
+          placeholder="自己紹介文"
+          required
+        />
+      </div>
+    );
+  }
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -128,16 +143,7 @@ export default function ProfileEditModal({
           {/* Username */}
           <UserNameInput />
           {/* Bio */}
-          <div className="space-y-2">
-            <Label htmlFor="bio">自己紹介</Label>
-            <Textarea
-              id="bio"
-              value={bio!}
-              onChange={(e) => setBio(e.target.value)}
-              placeholder="自己紹介文"
-              required
-            />
-          </div>
+
           {/* Avatar URL */}
           <div className="space-y-2">
             <Label htmlFor="avatarUrl">プロフィール画像</Label>
