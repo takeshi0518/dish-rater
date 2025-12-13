@@ -1,5 +1,6 @@
 'use client';
 
+import { CreateDishModal } from './CreateDishModal';
 import { Icons } from './Icon/icons';
 import { Button } from './ui/button';
 import { useState } from 'react';
@@ -15,6 +16,8 @@ export function CreateDishButton() {
       >
         <Icons.plus className="h-6 w-6" />
       </Button>
+
+      <CreateDishModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
