@@ -1,5 +1,6 @@
 'ues client';
 
+import CreateDishForm from './CreateDishForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
 interface CreateDishModalProps {
@@ -14,6 +15,7 @@ export function CreateDishModal({ isOpen, onClose }: CreateDishModalProps) {
         <DialogHeader>
           <DialogTitle>料理を投稿</DialogTitle>
         </DialogHeader>
+        <CreateDishForm onSucess={() => console.log('sucess')} />
       </DialogContent>
     </Dialog>
   );
