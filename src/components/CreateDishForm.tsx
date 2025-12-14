@@ -17,6 +17,7 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
   const [rating, setRating] = useState('');
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [tags, setTags] = useState('');
 
   return (
     <form className="space-y-4">
@@ -70,6 +71,16 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
           placeholder="https://example.com/image.jpg"
         />
       </div>
+      {/* タグ */}
+      <div>
+        <Label htmlFor="tags">タグ</Label>
+        <Input
+          id="tags"
+          onChange={(e) => setTags(e.target.value)}
+          placeholder="イタリアン、パスタ、ランチ"
+        />
+      </div>
+      
     </form>
   );
 }
