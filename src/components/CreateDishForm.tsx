@@ -15,6 +15,7 @@ interface CreateDishFormProps {
 export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
   const [dishName, setDishName] = useState('');
   const [rating, setRating] = useState('');
+  const [description, setDescription] = useState('');
 
   return (
     <form className="space-y-4">
@@ -43,6 +44,18 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
           onChange={(e) => setRating(e.target.value)}
           placeholder="4.5"
           required
+        />
+      </div>
+
+      {/* 説明文 */}
+      <div>
+        <Label htmlFor="description">説明</Label>
+        <Textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="料理の感想を書いてください"
+          rows={4}
         />
       </div>
     </form>
