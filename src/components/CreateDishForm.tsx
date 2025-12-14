@@ -8,11 +8,14 @@ import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { createClient } from '@/lib/supabase/client';
 
+import { Icons } from './Icon/icons';
+
 interface CreateDishFormProps {
   onSucess: () => void;
 }
 
 export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [dishName, setDishName] = useState('');
   const [rating, setRating] = useState('');
   const [description, setDescription] = useState('');
@@ -80,7 +83,28 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
           placeholder="イタリアン、パスタ、ランチ"
         />
       </div>
-      
+      {/* 送信ボタン */}
+      <div className="flex justify-end gap-2">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onSucess}
+          className="cursor-pointer"
+        >
+          キャンセル
+        </Button>
+        <Button
+          type="submit"
+          onClick={() => setIsLoading(true)}
+          className="cursor-pointer"
+        >
+          {isLoading ? (
+            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+          ) : (
+            '投稿する'
+          )}
+        </Button>
+      </div>
     </form>
   );
 }
