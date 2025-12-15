@@ -26,7 +26,9 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
     <form className="space-y-4">
       {/* 料理名 */}
       <div>
-        <Label htmlFor="dishName">料理名 *</Label>
+        <Label htmlFor="dishName" className="mb-2">
+          料理名
+        </Label>
         <Input
           id="dishName"
           value={dishName}
@@ -38,7 +40,9 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
 
       {/* 評価 */}
       <div>
-        <Label htmlFor="rating">評価(1-5) *</Label>
+        <Label htmlFor="rating" className="mb-2">
+          評価(1-5)
+        </Label>
         <Input
           id="rating"
           type="number"
@@ -54,7 +58,9 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
 
       {/* 説明文 */}
       <div>
-        <Label htmlFor="description">説明</Label>
+        <Label htmlFor="description" className="mb-2">
+          説明
+        </Label>
         <Textarea
           id="description"
           value={description}
@@ -65,7 +71,9 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
       </div>
       {/* 画像URL */}
       <div>
-        <Label htmlFor="imageUrl">画像URL</Label>
+        <Label htmlFor="imageUrl" className="mb-2">
+          画像URL
+        </Label>
         <Input
           id="imageUrl"
           type="url"
@@ -76,7 +84,9 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
       </div>
       {/* タグ */}
       <div>
-        <Label htmlFor="tags">タグ</Label>
+        <Label htmlFor="tags" className="mb-2">
+          タグ
+        </Label>
         <Input
           id="tags"
           onChange={(e) => setTags(e.target.value)}
