@@ -22,7 +22,6 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
   const [description, setDescription] = useState('');
   const [extractedTags, setExtractedTags] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState('');
-  // const [tags, setTags] = useState('');
 
   useEffect(() => {
     const tags = extractHashtags(description);
@@ -103,17 +102,6 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
           placeholder="https://example.com/image.jpg"
         />
       </div>
-      {/* タグ */}
-      {/* <div>
-        <Label htmlFor="tags" className="mb-2">
-          タグ
-        </Label>
-        <Input
-          id="tags"
-          onChange={(e) => setTags(e.target.value)}
-          placeholder="イタリアン、パスタ、ランチ"
-        />
-      </div> */}
       {/* 送信ボタン */}
       <div className="flex justify-end gap-2">
         <Button
