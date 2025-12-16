@@ -31,3 +31,14 @@ export function getAuthErrorMessage(error: unknown): string {
     'エラーが発生しました。もう一度お試しください。'
   );
 }
+
+export function extractHashtags(text: string): string[] {
+  //#で始まり、そのあとに文字が続くパターンを抽出
+  const hashtagPattern = /#[\p{L}\p{N}_]+/gu;
+  const mathes = text.match(hashtagPattern);
+
+  if (!mathes) return [];
+
+  //#を除去して重複削除
+  return [...new Set(mathes.map((tag) => tag.slice(1)))];
+}
