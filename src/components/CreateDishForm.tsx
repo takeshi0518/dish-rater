@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -9,6 +9,7 @@ import { Label } from './ui/label';
 import { createClient } from '@/lib/supabase/client';
 
 import { Icons } from './Icon/icons';
+import { extractHashtags } from '@/lib/utils';
 
 interface CreateDishFormProps {
   onSucess: () => void;
@@ -19,8 +20,14 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
   const [dishName, setDishName] = useState('');
   const [rating, setRating] = useState('');
   const [description, setDescription] = useState('');
+  const [extractedTags, setExtractedTags] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState('');
-  const [tags, setTags] = useState('');
+  // const [tags, setTags] = useState('');
+
+  useEffect(() => {
+    const tags = extractHashtags(description);
+    setExtractedTags(tags);
+  }, [description]);
 
   return (
     <form className="space-y-4">
@@ -83,7 +90,7 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
         />
       </div>
       {/* タグ */}
-      <div>
+      {/* <div>
         <Label htmlFor="tags" className="mb-2">
           タグ
         </Label>
@@ -92,7 +99,7 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
           onChange={(e) => setTags(e.target.value)}
           placeholder="イタリアン、パスタ、ランチ"
         />
-      </div>
+      </div> */}
       {/* 送信ボタン */}
       <div className="flex justify-end gap-2">
         <Button
