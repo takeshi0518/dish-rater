@@ -75,6 +75,20 @@ export default function CreateDishForm({ onSucess }: CreateDishFormProps) {
           placeholder="料理の感想を書いてください"
           rows={4}
         />
+
+        {/* 抽出されたタグをプレビュー */}
+        {extractedTags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {extractedTags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       {/* 画像URL */}
       <div>
