@@ -15,7 +15,7 @@ export function CreateDishModal({ isOpen, onClose }: CreateDishModalProps) {
         <DialogHeader>
           <DialogTitle>料理を投稿</DialogTitle>
         </DialogHeader>
-        <CreateDishForm onSucess={() => console.log('sucess')} />
+        <CreateDishForm onClose={onClose} />
       </DialogContent>
     </Dialog>
   );
