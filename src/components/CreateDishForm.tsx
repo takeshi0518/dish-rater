@@ -348,12 +348,41 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         return;
       }
 
+      let finalImageUrl = imageUrl;
+
+      if (uploadMode === 'upload' && dishFile) {
+        toast.info('画像をアップロード中...');
+
+        const fileExt = dishFile?.name.split('.').pop();
+        const filename = `${user.id}/${Date.now()}.${fileExt}`;
+
+        const { data, error: uploadError } = await supabase.storage
+          .from('dishes')
+          .upload(filename, dishFile!, {
+            cacheControl: '3600',
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error('アップロードエラー: ', uploadError);
+          toast.error('画像のアップロードに失敗しました');
+          return;
+        }
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('dishes').getPublicUrl(data.path);
+
+        finalImageUrl = publicUrl;
+        toast.success('画像をアップロードしました');
+      }
+
       const { error } = await supabase.from('dishes').insert({
         user_id: user.id,
         name: dishName.trim(),
         description: description.trim() || null,
         rating: ratingValue,
-        image_url: imageUrl.trim() || null,
+        image_url: finalImageUrl || null,
         tags: extractHashtags.length > 0 ? extractedTags : null,
         source_type: sourceType,
         restaurant_name:
