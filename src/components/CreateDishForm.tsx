@@ -59,10 +59,10 @@ function RatingInput({
         type="number"
         min="1"
         max="5"
-        step="0.5"
+        step="1"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="4.5"
+        placeholder="4"
         required
       />
     </div>
