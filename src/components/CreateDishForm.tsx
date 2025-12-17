@@ -215,6 +215,35 @@ function ImageUrlInput({
   );
 }
 
+function SubmitButtons({
+  onClose,
+  isLoading,
+}: {
+  onClose: () => void;
+  isLoading: boolean;
+}) {
+  return (
+    <div className="flex justify-end gap-2 pt-4">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={onClose}
+        className="cursor-pointer"
+        disabled={isLoading}
+      >
+        キャンセル
+      </Button>
+      <Button type="submit" className="cursor-pointer" disabled={isLoading}>
+        {isLoading ? (
+          <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+        ) : (
+          '投稿する'
+        )}
+      </Button>
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -316,24 +345,7 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       {/* 画像URL */}
       <ImageUrlInput value={imageUrl} onChange={setImageUrl} />
       {/* 送信ボタン */}
-      <div className="flex justify-end gap-2 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-          className="cursor-pointer"
-          disabled={isLoading}
-        >
-          キャンセル
-        </Button>
-        <Button type="submit" className="cursor-pointer" disabled={isLoading}>
-          {isLoading ? (
-            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
-          ) : (
-            '投稿する'
-          )}
-        </Button>
-      </div>
+      <SubmitButtons onClose={onClose} isLoading={isLoading} />
     </form>
   );
 }
