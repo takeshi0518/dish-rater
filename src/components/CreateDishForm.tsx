@@ -60,11 +60,48 @@ function RatingInput({
         min="1"
         max="5"
         step="0.5"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder="4.5"
         required
       />
+    </div>
+  );
+}
+
+function SouceTypeSelector({
+  value,
+  onChange,
+}: {
+  value: SourceType;
+  onChange: (value: SourceType) => void;
+}) {
+  return (
+    <div>
+      <Label className="mb-2">料理について</Label>
+      <RadioGroup
+        value={value}
+        onValueChange={(val) => onChange(val as SourceType)}
+      >
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="restaurant" id="restaurant" />
+          <Label htmlFor="restaurant" className="font-nomal cursor-pointer">
+            レストラン
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="homemade" id="homemade" />
+          <Label htmlFor="homemade" className="font-nomal cursor-pointer">
+            手作り
+          </Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="other" id="other" />
+          <Label htmlFor="other" className="font-nomal cursor-pointer">
+            その他
+          </Label>
+        </div>
+      </RadioGroup>
     </div>
   );
 }
@@ -151,33 +188,7 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       {/* 評価 */}
       <RatingInput value={rating} onChange={setRating} />
       {/* ソースタイプ */}
-      <div>
-        <Label className="mb-2">料理について</Label>
-        <RadioGroup
-          value={sourceType}
-          onValueChange={(value) => setSourceType(value as SourceType)}
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="restaurant" id="restaurant" />
-            <Label htmlFor="restaurant" className="font-nomal cursor-pointer">
-              レストラン
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="homemade" id="homemade" />
-            <Label htmlFor="homemade" className="font-nomal cursor-pointer">
-              手作り
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="other" id="other" />
-            <Label htmlFor="other" className="font-nomal cursor-pointer">
-              その他
-            </Label>
-          </div>
-        </RadioGroup>
-      </div>
-
+      <SouceTypeSelector value={sourceType} onChange={setSourceType} />
       {/* レストラン名 */}
       {sourceType === 'restaurant' && (
         <div>
