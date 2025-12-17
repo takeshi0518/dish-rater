@@ -192,6 +192,29 @@ function DescriptionInput({
   );
 }
 
+function ImageUrlInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor="imageUrl" className="mb-2">
+        画像URL
+      </Label>
+      <Input
+        id="imageUrl"
+        type="url"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="https://example.com/image.jpg"
+      />
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -291,18 +314,7 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         extractedTags={extractedTags}
       />
       {/* 画像URL */}
-      <div>
-        <Label htmlFor="imageUrl" className="mb-2">
-          画像URL
-        </Label>
-        <Input
-          id="imageUrl"
-          type="url"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://example.com/image.jpg"
-        />
-      </div>
+      <ImageUrlInput value={imageUrl} onChange={setImageUrl} />
       {/* 送信ボタン */}
       <div className="flex justify-end gap-2 pt-4">
         <Button
