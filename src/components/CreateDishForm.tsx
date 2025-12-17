@@ -194,21 +194,25 @@ function DescriptionInput({
 
 function ImageUrlInput({
   value,
-  onChange,
+  previewUrl,
+  setImageUrl,
   uploadMode,
   setUploadMode,
+  handleFileChange,
 }: {
   value: string;
-  onChange: (value: string) => void;
+  previewUrl: string;
+  setImageUrl: (value: string) => void;
   uploadMode: 'url' | 'upload';
   setUploadMode: Dispatch<SetStateAction<'url' | 'upload'>>;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div>
       <Label htmlFor="imageUrl" className="mb-2">
         画像URL
       </Label>
-      <div>
+      <div className="flex gap-2 mb-2">
         <Button
           type="button"
           size="sm"
@@ -226,13 +230,29 @@ function ImageUrlInput({
           URLを入力
         </Button>
       </div>
-      <Input
-        id="imageUrl"
-        type="url"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="https://example.com/image.jpg"
-      />
+      {uploadMode === 'upload' && (
+        <div>
+          <Input type="file" accept="image/*" onChange={handleFileChange} />
+        </div>
+      )}
+      {previewUrl && (
+        <div className="mt-2 flex justify-center">
+          <img
+            src={previewUrl}
+            alt="preview"
+            className="w-32 h-32 object-cover"
+          />
+        </div>
+      )}
+      {uploadMode === 'url' && (
+        <Input
+          id="imageUrl"
+          type="url"
+          value={value}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+        />
+      )}
     </div>
   );
 }
@@ -290,6 +310,16 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
     const tags = extractHashtags(description);
     setExtractedTags(tags);
   }, [description]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setDishFile(file);
+
+      const preview = URL.createObjectURL(file);
+      setPreviewUrl(preview);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -370,9 +400,11 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       {/* 画像URL */}
       <ImageUrlInput
         value={imageUrl}
-        onChange={setImageUrl}
+        setImageUrl={setImageUrl}
         uploadMode={uploadMode}
         setUploadMode={setUploadMode}
+        handleFileChange={handleFileChange}
+        previewUrl={previewUrl}
       />
       {/* 送信ボタン */}
       <SubmitButtons onClose={onClose} isLoading={isLoading} />
