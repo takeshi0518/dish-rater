@@ -19,6 +19,29 @@ interface CreateDishFormProps {
 
 type SourceType = 'restaurant' | 'homemade' | 'other';
 
+function DishNameInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor="dishName" className="mb-2">
+        料理名
+      </Label>
+      <Input
+        id="dishName"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="例: カルボナーラ"
+        required
+      />
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -97,19 +120,7 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       {/* 料理名 */}
-      <div>
-        <Label htmlFor="dishName" className="mb-2">
-          料理名
-        </Label>
-        <Input
-          id="dishName"
-          value={dishName}
-          onChange={(e) => setDishName(e.target.value)}
-          placeholder="例: カルボナーラ"
-          required
-        />
-      </div>
-
+      <DishNameInput value={dishName} onChange={setDishName} />
       {/* 評価 */}
       <div>
         <Label htmlFor="rating" className="mb-2">
