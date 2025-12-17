@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -194,23 +194,65 @@ function DescriptionInput({
 
 function ImageUrlInput({
   value,
-  onChange,
+  previewUrl,
+  setImageUrl,
+  uploadMode,
+  setUploadMode,
+  handleFileChange,
 }: {
   value: string;
-  onChange: (value: string) => void;
+  previewUrl: string;
+  setImageUrl: (value: string) => void;
+  uploadMode: 'url' | 'upload';
+  setUploadMode: Dispatch<SetStateAction<'url' | 'upload'>>;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div>
       <Label htmlFor="imageUrl" className="mb-2">
         画像URL
       </Label>
-      <Input
-        id="imageUrl"
-        type="url"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="https://example.com/image.jpg"
-      />
+      <div className="flex gap-2 mb-2">
+        <Button
+          type="button"
+          size="sm"
+          variant={uploadMode === 'upload' ? 'default' : 'outline'}
+          onClick={() => setUploadMode('upload')}
+        >
+          ファイルをアップロード
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant={uploadMode === 'url' ? 'default' : 'outline'}
+          onClick={() => setUploadMode('url')}
+        >
+          URLを入力
+        </Button>
+      </div>
+      {uploadMode === 'upload' && (
+        <div>
+          <Input type="file" accept="image/*" onChange={handleFileChange} />
+        </div>
+      )}
+      {previewUrl && (
+        <div className="mt-2 flex justify-center">
+          <img
+            src={previewUrl}
+            alt="preview"
+            className="w-32 h-32 object-cover"
+          />
+        </div>
+      )}
+      {uploadMode === 'url' && (
+        <Input
+          id="imageUrl"
+          type="url"
+          value={value}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+        />
+      )}
     </div>
   );
 }
@@ -254,6 +296,9 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const [description, setDescription] = useState('');
   const [extractedTags, setExtractedTags] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState('');
+  const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [dishFile, setDishFile] = useState<File | null>(null);
 
   //ソース情報
   const [sourceType, setSourceType] = useState<SourceType>('restaurant');
@@ -265,6 +310,16 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
     const tags = extractHashtags(description);
     setExtractedTags(tags);
   }, [description]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setDishFile(file);
+
+      const preview = URL.createObjectURL(file);
+      setPreviewUrl(preview);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -293,12 +348,41 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         return;
       }
 
+      let finalImageUrl = imageUrl;
+
+      if (uploadMode === 'upload' && dishFile) {
+        toast.info('画像をアップロード中...');
+
+        const fileExt = dishFile?.name.split('.').pop();
+        const filename = `${user.id}/${Date.now()}.${fileExt}`;
+
+        const { data, error: uploadError } = await supabase.storage
+          .from('dishes')
+          .upload(filename, dishFile!, {
+            cacheControl: '3600',
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error('アップロードエラー: ', uploadError);
+          toast.error('画像のアップロードに失敗しました');
+          return;
+        }
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('dishes').getPublicUrl(data.path);
+
+        finalImageUrl = publicUrl;
+        toast.success('画像をアップロードしました');
+      }
+
       const { error } = await supabase.from('dishes').insert({
         user_id: user.id,
         name: dishName.trim(),
         description: description.trim() || null,
         rating: ratingValue,
-        image_url: imageUrl.trim() || null,
+        image_url: finalImageUrl || null,
         tags: extractHashtags.length > 0 ? extractedTags : null,
         source_type: sourceType,
         restaurant_name:
@@ -343,7 +427,14 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         extractedTags={extractedTags}
       />
       {/* 画像URL */}
-      <ImageUrlInput value={imageUrl} onChange={setImageUrl} />
+      <ImageUrlInput
+        value={imageUrl}
+        setImageUrl={setImageUrl}
+        uploadMode={uploadMode}
+        setUploadMode={setUploadMode}
+        handleFileChange={handleFileChange}
+        previewUrl={previewUrl}
+      />
       {/* 送信ボタン */}
       <SubmitButtons onClose={onClose} isLoading={isLoading} />
     </form>
