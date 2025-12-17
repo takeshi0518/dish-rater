@@ -129,6 +129,28 @@ function RestaurantNameInput({
   );
 }
 
+function ChefNameInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (vallue: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor="chefName" className="mb-2">
+        料理を作ったひと
+      </Label>
+      <Input
+        id="chefName"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="例: 山田太郎"
+      />
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -219,20 +241,8 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
           onChange={setRestaurantName}
         />
       )}
-
       {/* シェフ名 */}
-      <div>
-        <Label htmlFor="chefName" className="mb-2">
-          料理を作ったひと
-        </Label>
-        <Input
-          id="chefName"
-          value={chefName}
-          onChange={(e) => setChefName(e.target.value)}
-          placeholder="例: 山田太郎"
-        />
-      </div>
-
+      <ChefNameInput value={chefName} onChange={setChefName} />
       {/* 説明文 */}
       <div>
         <Label htmlFor="description" className="mb-2">
