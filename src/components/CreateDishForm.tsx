@@ -151,6 +151,47 @@ function ChefNameInput({
   );
 }
 
+function DescriptionInput({
+  value,
+  onChange,
+  extractedTags,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  extractedTags: string[];
+}) {
+  return (
+    <div>
+      <Label htmlFor="description" className="mb-2">
+        説明
+      </Label>
+      <Textarea
+        id="description"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="料理の感想を書いてください"
+        rows={4}
+        maxLength={500}
+      />
+      <p className="text-xs text-gray-500 mt-1">{value.length} / 500文字</p>
+
+      {/* 抽出されたタグをプレビュー */}
+      {extractedTags.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-2">
+          {extractedTags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -244,36 +285,11 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       {/* シェフ名 */}
       <ChefNameInput value={chefName} onChange={setChefName} />
       {/* 説明文 */}
-      <div>
-        <Label htmlFor="description" className="mb-2">
-          説明
-        </Label>
-        <Textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="料理の感想を書いてください"
-          rows={4}
-          maxLength={500}
-        />
-        <p className="text-xs text-gray-500 mt-1">
-          {description.length} / 500文字
-        </p>
-
-        {/* 抽出されたタグをプレビュー */}
-        {extractedTags.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-2">
-            {extractedTags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+      <DescriptionInput
+        value={description}
+        onChange={setDescription}
+        extractedTags={extractedTags}
+      />
       {/* 画像URL */}
       <div>
         <Label htmlFor="imageUrl" className="mb-2">
