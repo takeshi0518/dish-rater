@@ -42,6 +42,33 @@ function DishNameInput({
   );
 }
 
+function RatingInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor="rating" className="mb-2">
+        評価(1-5)
+      </Label>
+      <Input
+        id="rating"
+        type="number"
+        min="1"
+        max="5"
+        step="0.5"
+        value={rating}
+        onChange={(e) => setRating(e.target.value)}
+        placeholder="4.5"
+        required
+      />
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -122,23 +149,7 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       {/* 料理名 */}
       <DishNameInput value={dishName} onChange={setDishName} />
       {/* 評価 */}
-      <div>
-        <Label htmlFor="rating" className="mb-2">
-          評価(1-5)
-        </Label>
-        <Input
-          id="rating"
-          type="number"
-          min="1"
-          max="5"
-          step="0.5"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          placeholder="4.5"
-          required
-        />
-      </div>
-
+      <RatingInput value={rating} onChange={setRating} />
       {/* ソースタイプ */}
       <div>
         <Label className="mb-2">料理について</Label>
