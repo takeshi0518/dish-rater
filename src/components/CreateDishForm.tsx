@@ -106,6 +106,29 @@ function SouceTypeSelector({
   );
 }
 
+function RestaurantNameInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (vallue: string) => void;
+}) {
+  return (
+    <div>
+      <Label htmlFor="restaurantName" className="mb-2">
+        レストラン名
+      </Label>
+      <Input
+        id="restaurantName"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="例: トラットリア ロッソ"
+        required
+      />
+    </div>
+  );
+}
+
 export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -191,18 +214,10 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       <SouceTypeSelector value={sourceType} onChange={setSourceType} />
       {/* レストラン名 */}
       {sourceType === 'restaurant' && (
-        <div>
-          <Label htmlFor="restaurantName" className="mb-2">
-            レストラン名
-          </Label>
-          <Input
-            id="restaurantName"
-            value={restaurantName}
-            onChange={(e) => setRestaurantName(e.target.value)}
-            placeholder="例: トラットリア ロッソ"
-            required
-          />
-        </div>
+        <RestaurantNameInput
+          value={restaurantName}
+          onChange={setRestaurantName}
+        />
       )}
 
       {/* シェフ名 */}
