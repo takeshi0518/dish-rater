@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -195,15 +195,37 @@ function DescriptionInput({
 function ImageUrlInput({
   value,
   onChange,
+  uploadMode,
+  setUploadMode,
 }: {
   value: string;
   onChange: (value: string) => void;
+  uploadMode: 'url' | 'upload';
+  setUploadMode: Dispatch<SetStateAction<'url' | 'upload'>>;
 }) {
   return (
     <div>
       <Label htmlFor="imageUrl" className="mb-2">
         画像URL
       </Label>
+      <div>
+        <Button
+          type="button"
+          size="sm"
+          variant={uploadMode === 'upload' ? 'default' : 'outline'}
+          onClick={() => setUploadMode('upload')}
+        >
+          ファイルをアップロード
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant={uploadMode === 'url' ? 'default' : 'outline'}
+          onClick={() => setUploadMode('url')}
+        >
+          URLを入力
+        </Button>
+      </div>
       <Input
         id="imageUrl"
         type="url"
@@ -254,6 +276,9 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
   const [description, setDescription] = useState('');
   const [extractedTags, setExtractedTags] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState('');
+  const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [dishFile, setDishFile] = useState<File | null>(null);
 
   //ソース情報
   const [sourceType, setSourceType] = useState<SourceType>('restaurant');
@@ -343,7 +368,12 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         extractedTags={extractedTags}
       />
       {/* 画像URL */}
-      <ImageUrlInput value={imageUrl} onChange={setImageUrl} />
+      <ImageUrlInput
+        value={imageUrl}
+        onChange={setImageUrl}
+        uploadMode={uploadMode}
+        setUploadMode={setUploadMode}
+      />
       {/* 送信ボタン */}
       <SubmitButtons onClose={onClose} isLoading={isLoading} />
     </form>
