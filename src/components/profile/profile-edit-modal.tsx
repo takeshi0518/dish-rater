@@ -126,6 +126,34 @@ function AvatarUrlInput({
   );
 }
 
+function ProfileEditModalButton({
+  onClose,
+  isLoading,
+}: {
+  onClose: () => void;
+  isLoading: boolean;
+}) {
+  return (
+    <div className="flex justify-end gap-2 pt-4">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={onClose}
+        disabled={isLoading}
+      >
+        キャンセル
+      </Button>
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <Icons.loaderCircle className="w-5 h-5 animate-spin" />
+        ) : (
+          '保存'
+        )}
+      </Button>
+    </div>
+  );
+}
+
 export default function ProfileEditModal({
   isOpen,
   onClose,
@@ -211,28 +239,6 @@ export default function ProfileEditModal({
     }
   };
 
-  function ProfileEditModalButton() {
-    return (
-      <div className="flex justify-end gap-2 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-          disabled={isLoading}
-        >
-          キャンセル
-        </Button>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? (
-            <Icons.loaderCircle className="w-5 h-5 animate-spin" />
-          ) : (
-            '保存'
-          )}
-        </Button>
-      </div>
-    );
-  }
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -254,7 +260,7 @@ export default function ProfileEditModal({
             handleFileChange={handleFileChange}
           />
           {/* Button */}
-          <ProfileEditModalButton />
+          <ProfileEditModalButton onClose={onClose} isLoading={isLoading} />
         </form>
       </DialogContent>
     </Dialog>
