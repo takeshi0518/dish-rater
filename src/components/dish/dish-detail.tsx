@@ -67,6 +67,21 @@ function DishImage({
   return (
     <div className="w-full relative">
       {/* 閉じるボタン */}
+      {dish.image_url ? (
+        <div className="relative w-full aspect-square">
+          <Image
+            src={dish.image_url}
+            alt={dish.name}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      ) : (
+        <div className="w-full aspect-square bg-gray-200 flex items-center justify-center">
+          <span className="text-gray-400">No Image</span>
+        </div>
+      )}
       {onClose && (
         <Button
           onClick={onClose}
@@ -98,21 +113,6 @@ function DishImage({
         >
           <Icons.share className="w-5 h-5" />
         </Button>
-      )}
-      {dish.image_url ? (
-        <div className="relative w-full aspect-square">
-          <Image
-            src={dish.image_url}
-            alt={dish.name}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      ) : (
-        <div className="w-full aspect-square bg-gray-200 flex items-center justify-center">
-          <span className="text-gray-400">No Image</span>
-        </div>
       )}
     </div>
   );
@@ -216,7 +216,6 @@ export default function DishesDetail({
   userName,
   avatarUrl,
 }: DishDetailProps) {
-  console.log(userName);
   return (
     <div className="bg-white w-full md:shadow-sm">
       <div className="flex flex-col">
