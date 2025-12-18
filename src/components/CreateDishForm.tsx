@@ -351,8 +351,6 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
       let finalImageUrl = imageUrl;
 
       if (uploadMode === 'upload' && dishFile) {
-        toast.info('画像をアップロード中...');
-
         const fileExt = dishFile?.name.split('.').pop();
         const filename = `${user.id}/${Date.now()}.${fileExt}`;
 
@@ -374,7 +372,6 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         } = supabase.storage.from('dishes').getPublicUrl(data.path);
 
         finalImageUrl = publicUrl;
-        toast.success('画像をアップロードしました');
       }
 
       const { error } = await supabase.from('dishes').insert({
