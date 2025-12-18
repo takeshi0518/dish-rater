@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -18,6 +18,27 @@ type ProfileEditModalProps = {
   onClose: () => void;
   profile: Profile;
 };
+
+function UserNameInput({
+  value,
+  setUserName,
+}: {
+  value: string;
+  setUserName: Dispatch<SetStateAction<string>>;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="username">ユーザー名</Label>
+      <Input
+        id="username"
+        value={value}
+        onChange={(e) => setUserName(e.target.value)}
+        placeholder="username"
+        required
+      />
+    </div>
+  );
+}
 
 export default function ProfileEditModal({
   isOpen,
@@ -103,21 +124,6 @@ export default function ProfileEditModal({
       setIsLoading(false);
     }
   };
-
-  function UserNameInput() {
-    return (
-      <div className="space-y-2">
-        <Label htmlFor="username">ユーザー名</Label>
-        <Input
-          id="username"
-          value={username}
-          onChange={(e) => setUserName(e.target.value)}
-          placeholder="username"
-          required
-        />
-      </div>
-    );
-  }
 
   function BioInput() {
     return (
@@ -215,7 +221,7 @@ export default function ProfileEditModal({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           {/* Username */}
-          <UserNameInput />
+          <UserNameInput value={username} setUserName={setUserName} />
           {/* Bio */}
           <BioInput />
           {/* Avatar URL */}
