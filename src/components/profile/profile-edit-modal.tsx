@@ -20,10 +20,10 @@ type ProfileEditModalProps = {
 };
 
 function UserNameInput({
-  value,
+  username,
   setUserName,
 }: {
-  value: string;
+  username: string;
   setUserName: Dispatch<SetStateAction<string>>;
 }) {
   return (
@@ -31,9 +31,30 @@ function UserNameInput({
       <Label htmlFor="username">ユーザー名</Label>
       <Input
         id="username"
-        value={value}
+        value={username}
         onChange={(e) => setUserName(e.target.value)}
         placeholder="username"
+        required
+      />
+    </div>
+  );
+}
+
+function BioInput({
+  bio,
+  setBio,
+}: {
+  bio: string;
+  setBio: Dispatch<SetStateAction<string>>;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="bio">自己紹介</Label>
+      <Textarea
+        id="bio"
+        value={bio!}
+        onChange={(e) => setBio(e.target.value)}
+        placeholder="自己紹介文"
         required
       />
     </div>
@@ -125,21 +146,6 @@ export default function ProfileEditModal({
     }
   };
 
-  function BioInput() {
-    return (
-      <div className="space-y-2">
-        <Label htmlFor="bio">自己紹介</Label>
-        <Textarea
-          id="bio"
-          value={bio!}
-          onChange={(e) => setBio(e.target.value)}
-          placeholder="自己紹介文"
-          required
-        />
-      </div>
-    );
-  }
-
   function AvatarUrlInput() {
     return (
       <>
@@ -221,9 +227,9 @@ export default function ProfileEditModal({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           {/* Username */}
-          <UserNameInput value={username} setUserName={setUserName} />
+          <UserNameInput username={username} setUserName={setUserName} />
           {/* Bio */}
-          <BioInput />
+          <BioInput bio={bio} setBio={setBio} />
           {/* Avatar URL */}
           <AvatarUrlInput />
           {/* Button */}
