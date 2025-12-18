@@ -61,6 +61,71 @@ function BioInput({
   );
 }
 
+function AvatarUrlInput({
+  uploadMode,
+  setUploadMode,
+  previewUrl,
+  avatarUrl,
+  setAvatarUrl,
+  handleFileChange,
+}: {
+  uploadMode: 'upload' | 'url';
+  setUploadMode: Dispatch<SetStateAction<'upload' | 'url'>>;
+  previewUrl: string;
+  avatarUrl: string;
+  setAvatarUrl: Dispatch<SetStateAction<string>>;
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <>
+      <div className="space-y-2">
+        <Label htmlFor="avatarUrl">プロフィール画像</Label>
+        <div className="flex gap-2 mb-2">
+          <Button
+            type="button"
+            variant={uploadMode === 'upload' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setUploadMode('upload')}
+          >
+            ファイルをアップロード
+          </Button>
+          <Button
+            type="button"
+            variant={uploadMode === 'url' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setUploadMode('url')}
+          >
+            URLを入力
+          </Button>
+        </div>
+        {uploadMode === 'upload' && (
+          <div className="space-y-2">
+            <Input type="file" accept="image/*" onChange={handleFileChange} />
+
+            {previewUrl && (
+              <div className="mt-2 flex justify-center">
+                <img
+                  src={previewUrl}
+                  alt="preview"
+                  className="w-32 h-32 rounded-full object-cover"
+                />
+              </div>
+            )}
+          </div>
+        )}
+        {uploadMode === 'url' && (
+          <Input
+            type="url"
+            value={avatarUrl!}
+            onChange={(e) => setAvatarUrl(e.target.value)}
+            placeholder="https://example.com/avatar.jpg"
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function ProfileEditModal({
   isOpen,
   onClose,
@@ -146,57 +211,6 @@ export default function ProfileEditModal({
     }
   };
 
-  function AvatarUrlInput() {
-    return (
-      <>
-        <div className="space-y-2">
-          <Label htmlFor="avatarUrl">プロフィール画像</Label>
-          <div className="flex gap-2 mb-2">
-            <Button
-              type="button"
-              variant={uploadMode === 'upload' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setUploadMode('upload')}
-            >
-              ファイルをアップロード
-            </Button>
-            <Button
-              type="button"
-              variant={uploadMode === 'url' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setUploadMode('url')}
-            >
-              URLを入力
-            </Button>
-          </div>
-          {uploadMode === 'upload' && (
-            <div className="space-y-2">
-              <Input type="file" accept="image/*" onChange={handleFileChange} />
-
-              {previewUrl && (
-                <div className="mt-2 flex justify-center">
-                  <img
-                    src={previewUrl}
-                    alt="preview"
-                    className="w-32 h-32 rounded-full object-cover"
-                  />
-                </div>
-              )}
-            </div>
-          )}
-          {uploadMode === 'url' && (
-            <Input
-              type="url"
-              value={avatarUrl!}
-              onChange={(e) => setAvatarUrl(e.target.value)}
-              placeholder="https://example.com/avatar.jpg"
-            />
-          )}
-        </div>
-      </>
-    );
-  }
-
   function ProfileEditModalButton() {
     return (
       <div className="flex justify-end gap-2 pt-4">
@@ -231,7 +245,14 @@ export default function ProfileEditModal({
           {/* Bio */}
           <BioInput bio={bio} setBio={setBio} />
           {/* Avatar URL */}
-          <AvatarUrlInput />
+          <AvatarUrlInput
+            uploadMode={uploadMode}
+            setUploadMode={setUploadMode}
+            previewUrl={previewUrl}
+            avatarUrl={avatarUrl}
+            setAvatarUrl={setAvatarUrl}
+            handleFileChange={handleFileChange}
+          />
           {/* Button */}
           <ProfileEditModalButton />
         </form>
