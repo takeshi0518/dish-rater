@@ -2,6 +2,15 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 ALTER TABLE auth.users DISABLE TRIGGER on_auth_user_created;
 
+DO $$
+DECLARE
+  instance_uuid UUID;
+BEGIN
+  SELECT instance_id INTO instance_uuid FROM auth.users LIMIT 1;
+
+IF instance_uuid IS NULL THEN
+  instance_uuid := '00000000-0000-0000-0000-000000000000'::UUID;
+
 INSERT INTO auth.users (
   id,
   instance_id,
