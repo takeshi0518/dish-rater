@@ -1,3 +1,7 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+ALTER TABLE auth.users DISABLE TRIGGER on_auth_user_created;
+
 INSERT INTO auth.users (
   id,
   instance_id,
