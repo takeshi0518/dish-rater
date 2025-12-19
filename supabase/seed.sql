@@ -1,22 +1,92 @@
-INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+INSERT INTO auth.users (
+  id,
+  instance_id,
+  email,
+  encrypted_password,
+  email_confirmed_at,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  aud,
+  role,
+  created_at,
+  updated_at,
+  confirmation_token,
+  recovery_token,
+  email_change_token_new
+  )
 VALUES
   (
     '00000000-0000-0000-0000-000000000000'::UUID,
+    '00000000-0000-0000-0000-000000000000'::UUID,
     'takeshi@example.com',
     crypt('password123', gen_salt('bf')),
+    NOW(),
+    '{"provider":"email","providers":["email"]}'::jsonb,
+    '{}'::jsonb,
+    'authenticated',
+    'authenticated',
+    NOW(),
+    NOW(),
+    '',
+    '',
+    ''
+  ),
+  (
+    '11111111-1111-1111-1111-111111111111'::UUID,
+    '00000000-0000-0000-0000-000000000000'::UUID,
+    'test@example.com',
+    crypt('passwordtest', gen_salt('bf')),
+    NOW(),
+    '{"provider":"email","providers":["email"]}'::jsonb,
+    '{}'::jsonb,
+    'authenticated',
+    'authenticated',
+    NOW(),
+    NOW(),
+    '',
+    '',
+    ''
+  );
+
+INSERT INTO auth.identities (
+  id,
+  user_id,
+  provider_id,
+  provider,
+  identity_data,
+  last_sign_in_at,
+  created_at,
+  updated_at
+)
+VALUES
+  (
+    '00000000-0000-0000-0000-000000000000'::UUID,
+    '00000000-0000-0000-0000-000000000000'::UUID,
+    '00000000-0000-0000-0000-000000000000'::UUID,
+    'email',
+    jsonb_build_object(
+      'sub', '00000000-0000-0000-0000-000000000000',
+      'email', 'takeshi@example.com'
+    ),
     NOW(),
     NOW(),
     NOW()
   ),
   (
     '11111111-1111-1111-1111-111111111111'::UUID,
-    'test@example.com',
-    crypt('passwordtest', gen_salt('bf')),
+    '11111111-1111-1111-1111-111111111111'::UUID,
+    '11111111-1111-1111-1111-111111111111'::UUID,
+    'email',
+    jsonb_build_object(
+      'sub', '11111111-1111-1111-1111-111111111111',
+      'email', 'test@example.com'
+    ),
     NOW(),
     NOW(),
     NOW()
   );
 
+  
 INSERT INTO profiles (id, username, avatar_url, bio)
 VALUES
   (
