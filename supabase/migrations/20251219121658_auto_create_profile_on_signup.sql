@@ -7,7 +7,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
   INSERT INTO public.profiles (id, username, created_at, updated_at)
-  VLUES (
+  VALUES (
     NEW.id,
     COALESCE(
       NEW.raw_user_meta_data->>'user_name',
