@@ -20,7 +20,7 @@ export default async function ProfilePage({ params }: Props) {
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('*')
+    .select('id, username, avatar_url, bio')
     .eq('id', userId)
     .single();
 
@@ -30,7 +30,7 @@ export default async function ProfilePage({ params }: Props) {
 
   const { data: dishes } = await supabase
     .from('dishes')
-    .select('*')
+    .select('id, name, image_url, rating')
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 

@@ -7,12 +7,13 @@ import { Button } from '../ui/button';
 import { Icons } from '../Icon/icons';
 import { ProfileBio } from './profile-bio';
 import DishCard from '../dish/dish-card';
-import { Profile, Dish } from '@/app/types/dish';
+import { DashboardDish } from '@/app/types/dish';
+import { ProfilePageData } from '@/app/types/profile';
 import ProfileEditModal from './profile-edit-modal';
 
 type ProfileContentProps = {
-  profile: Profile;
-  dishes: Dish[] | null;
+  profile: ProfilePageData;
+  dishes: DashboardDish[] | null;
   isOwnProfile: boolean;
 };
 

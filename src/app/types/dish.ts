@@ -20,11 +20,10 @@ export type DishWithProfile = Dish & {
   } | null;
 };
 
-export type Profile = {
+
+export type DashboardDish = {
   id: string;
-  username: string;
-  avatar_url: string | null;
-  bio: string | null;
-  created_at: string;
-  updated_at: string;
+  name: string;
+  image_url: string | null;
+  rating: number | null;
 };
