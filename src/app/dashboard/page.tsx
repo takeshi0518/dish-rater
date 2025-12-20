@@ -1,6 +1,7 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import DishCard from '@/components/dish/dish-card';
 import DishSearch from '@/components/dish/dish-search';
+import { DashboardDish } from '../types/dish';
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
@@ -8,7 +9,7 @@ export default async function DashboardPage() {
   // 料理データを取得
   const { data: dishes, error } = await supabase
     .from('dishes')
-    .select('*')
+    .select('id, name, image_url, rating')
     .order('created_at', { ascending: false });
 
   if (error) {

@@ -1,15 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { DashboardDish } from '@/app/types/dish';
 import { Icons } from '../Icon/icons';
 
-type DishCardProps = {
-  dish: {
-    id: string;
-    name: string;
-    image_url: string | null;
-    rating: number | null;
-  };
-};
+interface DishCardProps {
+  dish: DashboardDish;
+}
 
 export default function DishCard({ dish }: DishCardProps) {
   return (

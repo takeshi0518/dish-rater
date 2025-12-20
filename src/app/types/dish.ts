@@ -28,3 +28,10 @@ export type Profile = {
   created_at: string;
   updated_at: string;
 };
+
+export type DashboardDish = {
+  id: string;
+  name: string;
+  image_url: string | null;
+  rating: number | null;
+};
