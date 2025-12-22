@@ -40,6 +40,13 @@ export function DishDetailActions({
           <Icons.edit className="w-4 h-4 mr-2" />
           編集
         </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={onDelete}
+          className="cursor-pointer text-red-600 focus:text-red-600"
+        >
+          <Icons.trash className="w-4 h-4 mr-2" />
+          削除
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
