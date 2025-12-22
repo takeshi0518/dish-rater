@@ -207,6 +207,16 @@ export default function DishesDetail({
 }: DishDetailProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const initialData = {
+    name: dish.name,
+    rating: dish.rating,
+    description: dish.description,
+    image_url: dish.image_url,
+    source_tpe: dish.source_type,
+    restaurant_name: dish.restaurant_name,
+    chef_name: dish.chef_name,
+  };
+
   const handleEdit = () => {
     setIsEditModalOpen(true);
   };
@@ -240,6 +250,9 @@ export default function DishesDetail({
       <DishModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
+        mode="edit"
+        dishId={dish.id}
+        initialData={initialData}
       />
     </>
   );

@@ -17,7 +17,11 @@ export function CreateDishButton() {
         <Icons.plus className="h-6 w-6" />
       </Button>
 
-      <DishModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <DishModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        mode="create"
+      />
     </>
   );
 }

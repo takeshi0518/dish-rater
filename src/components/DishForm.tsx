@@ -13,7 +13,18 @@ import { Icons } from './Icon/icons';
 import { extractHashtags } from '@/lib/utils';
 import { toast } from 'sonner';
 
-interface CreateDishFormProps {
+interface DishFormProps {
+  mode: 'create' | 'edit';
+  dishId?: string;
+  initialData?: {
+    name: string;
+    rating: number;
+    description: string;
+    image_url: string | null;
+    source_type: SourceType;
+    restaurant_name: string | null;
+    chef_name: string | null;
+  };
   onClose: () => void;
 }
 
@@ -260,9 +271,11 @@ function ImageUrlInput({
 function SubmitButtons({
   onClose,
   isLoading,
+  mode,
 }: {
   onClose: () => void;
   isLoading: boolean;
+  mode: 'create' | 'edit';
 }) {
   return (
     <div className="flex justify-end gap-2 pt-4">
@@ -278,32 +291,47 @@ function SubmitButtons({
       <Button type="submit" className="cursor-pointer" disabled={isLoading}>
         {isLoading ? (
           <Icons.loaderCircle className="w-5 h-5 animate-spin" />
-        ) : (
+        ) : mode === 'create' ? (
           '投稿する'
+        ) : (
+          '更新する'
         )}
       </Button>
     </div>
   );
 }
 
-export default function CreateDishForm({ onClose }: CreateDishFormProps) {
+export default function CreateDishForm({
+  mode,
+  dishId,
+  initialData,
+  onClose,
+}: DishFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  //基本情報
-  const [dishName, setDishName] = useState('');
-  const [rating, setRating] = useState('');
-  const [description, setDescription] = useState('');
+  //初期値を設定
+  const [dishName, setDishName] = useState(initialData?.name || '');
+  const [rating, setRating] = useState(initialData?.rating?.toString() || '');
+  const [description, setDescription] = useState(
+    initialData?.description || ''
+  );
   const [extractedTags, setExtractedTags] = useState<string[]>([]);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(initialData?.image_url || '');
   const [uploadMode, setUploadMode] = useState<'url' | 'upload'>('url');
-  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [previewUrl, setPreviewUrl] = useState<string>(
+    initialData?.image_url || ''
+  );
   const [dishFile, setDishFile] = useState<File | null>(null);
 
   //ソース情報
-  const [sourceType, setSourceType] = useState<SourceType>('restaurant');
-  const [restaurantName, setRestaurantName] = useState('');
-  const [chefName, setChefName] = useState('');
+  const [sourceType, setSourceType] = useState<SourceType>(
+    initialData?.source_type || 'restaurant'
+  );
+  const [restaurantName, setRestaurantName] = useState(
+    initialData?.restaurant_name || ''
+  );
+  const [chefName, setChefName] = useState(initialData?.name || '');
 
   //説明文からハッシュタグを抽出
   useEffect(() => {
@@ -374,27 +402,47 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         finalImageUrl = publicUrl;
       }
 
-      const { error } = await supabase.from('dishes').insert({
-        user_id: user.id,
+      //データを準備
+      const dishData = {
         name: dishName.trim(),
         description: description.trim() || null,
         rating: ratingValue,
         image_url: finalImageUrl || null,
         tags: extractHashtags.length > 0 ? extractedTags : null,
-        source_type: sourceType,
+        sourceType: sourceType,
         restaurant_name:
           sourceType === 'restaurant' ? restaurantName.trim() : null,
         chef_name: chefName.trim() || null,
-      });
+      };
 
-      if (error) throw error;
+      if (mode === 'create') {
+        const { error } = await supabase.from('dishes').insert({
+          user_id: user.id,
+          ...dishData,
+        });
 
-      toast.success('料理を投稿しました');
+        if (error) throw error;
+        toast.success('料理を投稿しました');
+      } else {
+        if (!dishId) throw new Error('Dsih ID is required for edit mode');
+
+        const { error } = await supabase
+          .from('dishes')
+          .update(dishData)
+          .eq('id', dishId)
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+        toast.success('料理を更新しました');
+      }
+
       router.refresh();
       onClose();
     } catch (error) {
       console.error('投稿エラー', error);
-      toast.error('投稿に失敗しました');
+      toast.error(
+        mode === 'create' ? '投稿に失敗しました' : '更新に失敗しました'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -433,7 +481,7 @@ export default function CreateDishForm({ onClose }: CreateDishFormProps) {
         previewUrl={previewUrl}
       />
       {/* 送信ボタン */}
-      <SubmitButtons onClose={onClose} isLoading={isLoading} />
+      <SubmitButtons onClose={onClose} isLoading={isLoading} mode={mode} />
     </form>
   );
 }
