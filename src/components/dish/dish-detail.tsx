@@ -7,6 +7,7 @@ import { Button } from '../ui/button';
 import { Icons } from '@/components/Icon/icons';
 import { Dish } from '@/app/types/dish';
 import Link from 'next/link';
+import { DishDetailActions } from './dish-detail-actions';
 
 type DishDetailProps = {
   dish: Dish;
@@ -92,8 +93,14 @@ function DishImage({
           <Icons.close className="w-5 h-5" />
         </Button>
       )}
-      {/* 編集ボタン */}
       {isEditable && (
+        <DishDetailActions
+          onEdit={() => console.log('onEdit')}
+          onDelete={() => console.log('onDelete')}
+        />
+      )}
+      {/* 編集ボタン */}
+      {/* {isEditable && (
         <Button
           // onClick={編集モードに切り替え}
           variant="ghost"
@@ -102,9 +109,9 @@ function DishImage({
         >
           <Icons.edit className="w-5 h-5" />
         </Button>
-      )}
+      )} */}
       {/* 共有ボタン */}
-      {onShare && (
+      {/* {onShare && (
         <Button
           onClick={onShare}
           variant="ghost"
@@ -113,7 +120,7 @@ function DishImage({
         >
           <Icons.share className="w-5 h-5" />
         </Button>
-      )}
+      )} */}
     </div>
   );
 }
