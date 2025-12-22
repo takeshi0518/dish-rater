@@ -36,6 +36,10 @@ export function DishDetailActions({
           <Icons.share className="w-4 h-4 mr-2" />
           共有
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={onEdit} className="cursor-pointer">
+          <Icons.edit className="w-4 h-4 mr-2" />
+          編集
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
