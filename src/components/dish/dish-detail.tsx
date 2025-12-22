@@ -7,6 +7,8 @@ import { Button } from '../ui/button';
 import { Icons } from '@/components/Icon/icons';
 import { Dish } from '@/app/types/dish';
 import Link from 'next/link';
+import { DishDetailActions } from './dish-detail-actions';
+import { DishModal } from '../DishModal';
 
 type DishDetailProps = {
   dish: Dish;
@@ -58,10 +60,12 @@ function DishImage({
   onShare,
   onClose,
   isEditable,
+  onEdit,
 }: {
   dish: Dish;
   onShare?: () => void;
   onClose?: () => void;
+  onEdit: () => void;
   isEditable: boolean;
 }) {
   return (
@@ -92,27 +96,12 @@ function DishImage({
           <Icons.close className="w-5 h-5" />
         </Button>
       )}
-      {/* 編集ボタン */}
       {isEditable && (
-        <Button
-          // onClick={編集モードに切り替え}
-          variant="ghost"
-          size="icon"
-          className="absolute top-16 right-4 bg-white/90 hover:bg-white cursor-pointer"
-        >
-          <Icons.edit className="w-5 h-5" />
-        </Button>
-      )}
-      {/* 共有ボタン */}
-      {onShare && (
-        <Button
-          onClick={onShare}
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
-        >
-          <Icons.share className="w-5 h-5" />
-        </Button>
+        <DishDetailActions
+          onShare={onShare}
+          onEdit={onEdit}
+          onDelete={() => console.log('onDelete')}
+        />
       )}
     </div>
   );
@@ -216,26 +205,42 @@ export default function DishesDetail({
   userName,
   avatarUrl,
 }: DishDetailProps) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleEdit = () => {
+    setIsEditModalOpen(true);
+  };
   return (
-    <div className="bg-white w-full md:shadow-sm">
-      <div className="flex flex-col">
-        {/* 料理画像 */}
-        <DishImage
-          dish={dish}
-          onShare={onShare}
-          onClose={onClose}
-          isEditable={isEditable}
-        />
-        <div className="w-full">
-          <DishUserInfo dish={dish} username={userName} avatarUrl={avatarUrl} />
-          {/* 料理情報*/}
-          <DishInfo dish={dish} />
-          {/* 説明文 */}
-          <DishDescription description={dish.description} />
-          {/* タグ */}
-          <DishTags tags={dish.tags} />
+    <>
+      <div className="bg-white w-full md:shadow-sm">
+        <div className="flex flex-col">
+          {/* 料理画像 */}
+          <DishImage
+            dish={dish}
+            onShare={onShare}
+            onClose={onClose}
+            isEditable={isEditable}
+            onEdit={handleEdit}
+          />
+          <div className="w-full">
+            <DishUserInfo
+              dish={dish}
+              username={userName}
+              avatarUrl={avatarUrl}
+            />
+            {/* 料理情報*/}
+            <DishInfo dish={dish} />
+            {/* 説明文 */}
+            <DishDescription description={dish.description} />
+            {/* タグ */}
+            <DishTags tags={dish.tags} />
+          </div>
         </div>
       </div>
-    </div>
+      <DishModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+      />
+    </>
   );
 }

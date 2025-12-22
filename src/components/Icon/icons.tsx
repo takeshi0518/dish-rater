@@ -16,6 +16,8 @@ import {
   ArrowLeft,
   SquarePen,
   Plus,
+  MoreVertical,
+  Trash
 } from 'lucide-react';
 
 type IconProps = React.ComponentProps<'svg'>;
@@ -88,4 +90,6 @@ export const Icons = {
   arrowLeft: ArrowLeft,
   edit: SquarePen,
   plus: Plus,
+  moreVertical: MoreVertical,
+  trash: Trash
 } as const;

@@ -8,7 +8,7 @@ interface CreateDishModalProps {
   onClose: () => void;
 }
 
-export function CreateDishModal({ isOpen, onClose }: CreateDishModalProps) {
+export function DishModal({ isOpen, onClose }: CreateDishModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
