@@ -100,28 +100,6 @@ function DishImage({
           onDelete={() => console.log('onDelete')}
         />
       )}
-      {/* 編集ボタン */}
-      {/* {isEditable && (
-        <Button
-          // onClick={編集モードに切り替え}
-          variant="ghost"
-          size="icon"
-          className="absolute top-16 right-4 bg-white/90 hover:bg-white cursor-pointer"
-        >
-          <Icons.edit className="w-5 h-5" />
-        </Button>
-      )} */}
-      {/* 共有ボタン */}
-      {/* {onShare && (
-        <Button
-          onClick={onShare}
-          variant="ghost"
-          size="icon"
-          className="absolute top-4 right-4 bg-white/90 hover:bg-white cursor-pointer"
-        >
-          <Icons.share className="w-5 h-5" />
-        </Button>
-      )} */}
     </div>
   );
 }
