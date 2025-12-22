@@ -95,6 +95,7 @@ function DishImage({
       )}
       {isEditable && (
         <DishDetailActions
+          onShare={onShare}
           onEdit={() => console.log('onEdit')}
           onDelete={() => console.log('onDelete')}
         />
