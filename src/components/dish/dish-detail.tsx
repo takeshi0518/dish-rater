@@ -240,6 +240,7 @@ export default function DishesDetail({
       <DishModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
+        mode="edit"
       />
     </>
   );
