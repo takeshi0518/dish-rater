@@ -20,7 +20,6 @@ export type DishWithProfile = Dish & {
   } | null;
 };
 
-
 export type DashboardDish = {
   id: string;
   name: string;
