@@ -9,6 +9,7 @@ import { Dish } from '@/app/types/dish';
 import Link from 'next/link';
 import { DishDetailActions } from './dish-detail-actions';
 import { DishModal } from '../DishModal';
+import { DishFormData } from '@/app/types/dish';
 
 type DishDetailProps = {
   dish: Dish;
@@ -207,12 +208,12 @@ export default function DishesDetail({
 }: DishDetailProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const initialData = {
+  const initialData: DishFormData = {
     name: dish.name,
     rating: dish.rating,
     description: dish.description,
     image_url: dish.image_url,
-    source_tpe: dish.source_type,
+    source_type: dish.source_type,
     restaurant_name: dish.restaurant_name,
     chef_name: dish.chef_name,
   };

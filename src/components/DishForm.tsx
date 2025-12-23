@@ -12,19 +12,12 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Icons } from './Icon/icons';
 import { extractHashtags } from '@/lib/utils';
 import { toast } from 'sonner';
+import { DishFormData } from '@/app/types/dish';
 
 interface DishFormProps {
   mode: 'create' | 'edit';
   dishId?: string;
-  initialData?: {
-    name: string;
-    rating: number;
-    description: string;
-    image_url: string | null;
-    source_type: SourceType;
-    restaurant_name: string | null;
-    chef_name: string | null;
-  };
+  initialData?: DishFormData;
   onClose: () => void;
 }
 
