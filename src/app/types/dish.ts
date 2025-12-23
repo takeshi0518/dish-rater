@@ -29,7 +29,7 @@ export type DashboardDish = {
 
 export type DishFormData = {
   name: string;
-  rating: number;
+  rating: number | null;
   description: string | null;
   image_url: string | null;
   source_type: 'restaurant' | 'homemade' | 'other';

@@ -1,5 +1,6 @@
 'ues client';
 
+import { DishFormData } from '@/app/types/dish';
 import DishForm from './DishForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
@@ -7,8 +8,8 @@ interface DishModalProps {
   isOpen: boolean;
   onClose: () => void;
   mode?: 'create' | 'edit';
-  dishId: string;
-  initialData: any;
+  dishId?: string;
+  initialData?: DishFormData;
 }
 
 export function DishModal({
