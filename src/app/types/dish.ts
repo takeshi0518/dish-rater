@@ -26,3 +26,13 @@ export type DashboardDish = {
   image_url: string | null;
   rating: number | null;
 };
+
+export type DishFormData = {
+  name: string;
+  rating: number;
+  description: string | null;
+  image_url: string | null;
+  source_type: 'restaurant' | 'homemade' | 'other';
+  restaurant_name: string | null;
+  chef_name: string | null;
+};
