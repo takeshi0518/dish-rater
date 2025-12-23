@@ -402,7 +402,7 @@ export default function CreateDishForm({
         rating: ratingValue,
         image_url: finalImageUrl || null,
         tags: extractHashtags.length > 0 ? extractedTags : null,
-        sourceType: sourceType,
+        source_type: sourceType,
         restaurant_name:
           sourceType === 'restaurant' ? restaurantName.trim() : null,
         chef_name: chefName.trim() || null,
