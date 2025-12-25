@@ -33,7 +33,7 @@ export default function DishModalPage({ params }: Props) {
       const { data: dishData, error } = await supabase
         .from('dishes')
         .select(
-          '*, profiles!dishes_user_id_profiles_fkey(username, avatar_url)'
+          `id, name, ratig, description, image_url, source_type, restaurant_name, chef_name, tags, user_id, profiles!dishes_user_id_profiles_fkey(username, avatar_url)`
         )
         .eq('id', id)
         .single();
