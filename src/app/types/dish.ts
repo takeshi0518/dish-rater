@@ -20,6 +20,17 @@ export type DishWithProfile = Dish & {
   } | null;
 };
 
+export type DishDetail = DishFormData & {
+  id: string;
+  user_id: string;
+  tags: string[] | null;
+  created_at: string;
+  profiles: {
+    username?: string;
+    avatar_url?: string | null;
+  } | null;
+};
+
 export type DashboardDish = {
   id: string;
   name: string;

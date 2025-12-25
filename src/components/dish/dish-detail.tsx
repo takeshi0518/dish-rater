@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 
 import { Icons } from '@/components/Icon/icons';
-import { Dish } from '@/app/types/dish';
+import { Dish, DishDetail } from '@/app/types/dish';
 import Link from 'next/link';
 import { DishDetailActions } from './dish-detail-actions';
 import { DishModal } from '../DishModal';
 import { DishFormData } from '@/app/types/dish';
 
 type DishDetailProps = {
-  dish: Dish;
+  dish: DishDetail;
   onShare?: () => void;
   onClose?: () => void;
   isEditable: boolean;
@@ -25,7 +25,7 @@ function DishUserInfo({
   username,
   avatarUrl,
 }: {
-  dish: Dish;
+  dish: DishDetail;
   username?: string;
   avatarUrl?: string | null;
 }) {
@@ -63,7 +63,7 @@ function DishImage({
   isEditable,
   onEdit,
 }: {
-  dish: Dish;
+  dish: DishDetail;
   onShare?: () => void;
   onClose?: () => void;
   onEdit: () => void;
@@ -108,7 +108,7 @@ function DishImage({
   );
 }
 
-function DishInfo({ dish }: { dish: Dish }) {
+function DishInfo({ dish }: { dish: DishDetail }) {
   return (
     <>
       <div className="p-4 md:p-6">
