@@ -51,13 +51,6 @@ export default function DishModalPage({ params }: Props) {
         .eq('id', id)
         .single();
 
-      console.log('dishData', dishData);
-      console.log('dishData', JSON.stringify(dishData, null, 2));
-      console.log(
-        'profiles type',
-        Array.isArray(dish?.profiles) ? 'array' : typeof dishData?.profiles
-      );
-
       if (error || !dishData) {
         router.push('/dashboard');
         return;

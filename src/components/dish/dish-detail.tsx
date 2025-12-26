@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 
 import { Icons } from '@/components/Icon/icons';
-import { Dish, DishDetail } from '@/app/types/dish';
+import { DishDetail } from '@/app/types/dish';
 import Link from 'next/link';
 import { DishDetailActions } from './dish-detail-actions';
 import { DishModal } from '../DishModal';
@@ -15,7 +15,7 @@ type DishDetailProps = {
   dish: DishDetail;
   onShare?: () => void;
   onClose?: () => void;
-  isEditable: boolean;
+  isEditable?: boolean;
   userName?: string;
   avatarUrl?: string | null;
 };
@@ -230,7 +230,7 @@ export default function DishesDetail({
             dish={dish}
             onShare={onShare}
             onClose={onClose}
-            isEditable={isEditable}
+            isEditable={isEditable!}
             onEdit={handleEdit}
           />
           <div className="w-full">
