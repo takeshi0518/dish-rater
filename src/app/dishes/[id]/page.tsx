@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 import DishesDetail from '@/components/dish/dish-detail';
-import { Dish } from '@/app/types/dish';
+import { DishDetail } from '@/app/types/dish';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { Icons } from '@/components/Icon/icons';
 
@@ -17,9 +17,24 @@ export default async function DishDetailPage({ params }: Props) {
 
   const { data: dish, error } = await supabase
     .from('dishes')
-    .select('*')
+    .select(
+      `
+          id,
+          name,
+          rating, 
+          description, 
+          image_url, 
+          source_type, 
+          restaurant_name, 
+          chef_name, 
+          tags, 
+          user_id,
+          created_at,
+          profiles:user_id(username, avatar_url)
+          `
+    )
     .eq('id', id)
-    .single<Dish>();
+    .single();
 
   if (error || !dish) {
     notFound();
@@ -39,7 +54,7 @@ export default async function DishDetailPage({ params }: Props) {
 
       {/* 詳細コンテンツ */}
       <div className="container mx-auto max-w-2xl">
-        <DishesDetail dish={dish} />
+        <DishesDetail dish={dish as DishDetail} />
       </div>
     </div>
   );

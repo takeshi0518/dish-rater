@@ -33,7 +33,20 @@ export default function DishModalPage({ params }: Props) {
       const { data: dishData, error } = await supabase
         .from('dishes')
         .select(
-          `id, name, rating, description, image_url, source_type, restaurant_name, chef_name, tags, user_id,created_at, profiles!dishes_user_id_profiles_fkey(username, avatar_url)`
+          `
+          id,
+          name,
+          rating, 
+          description, 
+          image_url, 
+          source_type, 
+          restaurant_name, 
+          chef_name, 
+          tags, 
+          user_id,
+          created_at,
+          profiles:user_id(username, avatar_url)
+          `
         )
         .eq('id', id)
         .single();
@@ -45,7 +58,7 @@ export default function DishModalPage({ params }: Props) {
 
       const isOwn = user?.id === dishData.user_id;
 
-      setDish(dishData);
+      setDish(dishData as DishDetail);
       setIsOwnProfile(isOwn);
       setId(id);
     };
