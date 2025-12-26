@@ -3,13 +3,17 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
+import { createClient } from '@/lib/supabase/client';
 import { Icons } from '@/components/Icon/icons';
 import { DishDetail } from '@/app/types/dish';
 import Link from 'next/link';
 import { DishDetailActions } from './dish-detail-actions';
 import { DishModal } from '../DishModal';
 import { DishFormData } from '@/app/types/dish';
+import { DeleteDishDialog } from './delete-dish-dialog';
 
 type DishDetailProps = {
   dish: DishDetail;
@@ -62,11 +66,13 @@ function DishImage({
   onClose,
   isEditable,
   onEdit,
+  onDelete,
 }: {
   dish: DishDetail;
   onShare?: () => void;
   onClose?: () => void;
   onEdit: () => void;
+  onDelete: () => void;
   isEditable: boolean;
 }) {
   return (
@@ -101,7 +107,7 @@ function DishImage({
         <DishDetailActions
           onShare={onShare}
           onEdit={onEdit}
-          onDelete={() => console.log('onDelete')}
+          onDelete={onDelete}
         />
       )}
     </div>
@@ -206,7 +212,11 @@ export default function DishesDetail({
   userName,
   avatarUrl,
 }: DishDetailProps) {
+  const supabase = createClient();
+  const router = useRouter();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const initialData: DishFormData = {
     name: dish.name,
@@ -221,6 +231,66 @@ export default function DishesDetail({
   const handleEdit = () => {
     setIsEditModalOpen(true);
   };
+
+  const handleDelete = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    setIsDeleting(true);
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        toast.error('ログインが必要です');
+        return;
+      }
+
+      //画像を削除
+      if (dish.image_url) {
+        const urlParts = dish.image_url.split('/');
+        const bucketIndex = urlParts.indexOf('dishes');
+
+        if (bucketIndex !== -1) {
+          const filePath = urlParts.slice(bucketIndex + 1).join('/');
+
+          const { error: storageError } = await supabase.storage
+            .from('dishes')
+            .remove([filePath]);
+
+          if (storageError) {
+            console.error('画像削除エラー', storageError);
+          }
+        }
+      }
+
+      //データベースから削除
+      const { error } = await supabase
+        .from('dishes')
+        .delete()
+        .eq('id', dish.id)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      toast.success('料理を削除しました');
+
+      if (onClose) {
+        onClose();
+      }
+      router.push('/dashboard');
+      router.refresh();
+    } catch (error) {
+      console.error('削除エラー', error);
+      toast.error('削除に失敗しました');
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteDialogOpen(false);
+    }
+  };
   return (
     <>
       <div className="bg-white w-full md:shadow-sm">
@@ -232,6 +302,7 @@ export default function DishesDetail({
             onClose={onClose}
             isEditable={isEditable!}
             onEdit={handleEdit}
+            onDelete={handleDelete}
           />
           <div className="w-full">
             <DishUserInfo
@@ -248,12 +319,23 @@ export default function DishesDetail({
           </div>
         </div>
       </div>
+
+      {/* //編集用のモーダル */}
       <DishModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         mode="edit"
         dishId={dish.id}
         initialData={initialData}
+      />
+
+      {/* 削除用のダイアログ */}
+      <DeleteDishDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleConfirmDelete}
+        dishName={dish.name}
+        isLoading={isDeleting}
       />
     </>
   );
