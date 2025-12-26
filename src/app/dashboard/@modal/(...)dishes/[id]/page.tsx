@@ -33,10 +33,30 @@ export default function DishModalPage({ params }: Props) {
       const { data: dishData, error } = await supabase
         .from('dishes')
         .select(
-          `id, name, rating, description, image_url, source_type, restaurant_name, chef_name, tags, user_id,created_at, profiles!dishes_user_id_profiles_fkey(username, avatar_url)`
+          `
+          id,
+          name,
+          rating, 
+          description, 
+          image_url, 
+          source_type, 
+          restaurant_name, 
+          chef_name, 
+          tags, 
+          user_id,
+          created_at,
+          profiles:user_id(username, avatar_url)
+          `
         )
         .eq('id', id)
         .single();
+
+      console.log('dishData', dishData);
+      console.log('dishData', JSON.stringify(dishData, null, 2));
+      console.log(
+        'profiles type',
+        Array.isArray(dish?.profiles) ? 'array' : typeof dishData?.profiles
+      );
 
       if (error || !dishData) {
         router.push('/dashboard');
@@ -45,7 +65,7 @@ export default function DishModalPage({ params }: Props) {
 
       const isOwn = user?.id === dishData.user_id;
 
-      setDish(dishData);
+      setDish(dishData as DishDetail);
       setIsOwnProfile(isOwn);
       setId(id);
     };
