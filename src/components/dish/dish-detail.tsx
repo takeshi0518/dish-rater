@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { DishDetailActions } from './dish-detail-actions';
 import { DishModal } from '../DishModal';
 import { DishFormData } from '@/app/types/dish';
+import { DeleteDishDialog } from './delete-dish-dialog';
 
 type DishDetailProps = {
   dish: DishDetail;
@@ -62,11 +63,13 @@ function DishImage({
   onClose,
   isEditable,
   onEdit,
+  onDelete,
 }: {
   dish: DishDetail;
   onShare?: () => void;
   onClose?: () => void;
   onEdit: () => void;
+  onDelete: () => void;
   isEditable: boolean;
 }) {
   return (
@@ -101,7 +104,7 @@ function DishImage({
         <DishDetailActions
           onShare={onShare}
           onEdit={onEdit}
-          onDelete={() => console.log('onDelete')}
+          onDelete={onDelete}
         />
       )}
     </div>
@@ -207,6 +210,8 @@ export default function DishesDetail({
   avatarUrl,
 }: DishDetailProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const initialData: DishFormData = {
     name: dish.name,
@@ -221,6 +226,12 @@ export default function DishesDetail({
   const handleEdit = () => {
     setIsEditModalOpen(true);
   };
+
+  const handleDelete = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {};
   return (
     <>
       <div className="bg-white w-full md:shadow-sm">
@@ -232,6 +243,7 @@ export default function DishesDetail({
             onClose={onClose}
             isEditable={isEditable!}
             onEdit={handleEdit}
+            onDelete={handleDelete}
           />
           <div className="w-full">
             <DishUserInfo
@@ -254,6 +266,12 @@ export default function DishesDetail({
         mode="edit"
         dishId={dish.id}
         initialData={initialData}
+      />
+      <DeleteDishDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={handleConfirmDelete}
+        dishName={dish.name}
       />
     </>
   );

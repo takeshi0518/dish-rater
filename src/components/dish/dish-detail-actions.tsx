@@ -8,12 +8,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'; // ← ここを修正
+} from '@/components/ui/dropdown-menu';
 
 interface DishDetailActionsProps {
   onShare?: () => void;
   onEdit: () => void;
-  onDelete: () => void;
+  onDelete?: () => void;
 }
 
 export function DishDetailActions({
