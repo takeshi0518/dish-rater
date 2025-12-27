@@ -1,7 +1,6 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import DishCard from '@/components/dish/dish-card';
 import DishSearch from '@/components/dish/dish-search';
-import { DashboardDish } from '../types/dish';
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
