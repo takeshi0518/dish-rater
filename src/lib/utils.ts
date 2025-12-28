@@ -42,3 +42,4 @@ export function extractHashtags(text: string): string[] {
   //#を除去して重複削除
   return [...new Set(mathes.map((tag) => tag.slice(1)))];
 }
+
