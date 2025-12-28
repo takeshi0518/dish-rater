@@ -14,6 +14,7 @@ import { DishDetailActions } from './dish-detail-actions';
 import { DishModal } from '../DishModal';
 import { DishFormData } from '@/app/types/dish';
 import { DeleteDishDialog } from './delete-dish-dialog';
+import { deleteDish } from '@/lib/delete-dish';
 
 type DishDetailProps = {
   dish: DishDetail;
@@ -238,51 +239,21 @@ export default function DishesDetail({
 
   const handleConfirmDelete = async () => {
     setIsDeleting(true);
-
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const result = await deleteDish(dish.image_url, dish.id);
 
-      if (!user) {
-        toast.error('ログインが必要です');
+      if (result.error) {
+        toast.error(result.error);
         return;
       }
-
-      //画像を削除
-      if (dish.image_url) {
-        const urlParts = dish.image_url.split('/');
-        const bucketIndex = urlParts.indexOf('dishes');
-
-        if (bucketIndex !== -1) {
-          const filePath = urlParts.slice(bucketIndex + 1).join('/');
-
-          const { error: storageError } = await supabase.storage
-            .from('dishes')
-            .remove([filePath]);
-
-          if (storageError) {
-            console.error('画像削除エラー', storageError);
-          }
-        }
-      }
-
-      //データベースから削除
-      const { error } = await supabase
-        .from('dishes')
-        .delete()
-        .eq('id', dish.id)
-        .eq('user_id', user.id);
-
-      if (error) throw error;
 
       toast.success('料理を削除しました');
 
       if (onClose) {
         onClose();
       }
+
       router.push('/dashboard');
-      router.refresh();
     } catch (error) {
       console.error('削除エラー', error);
       toast.error('削除に失敗しました');
@@ -291,6 +262,7 @@ export default function DishesDetail({
       setIsDeleteDialogOpen(false);
     }
   };
+
   return (
     <>
       <div className="bg-white w-full md:shadow-sm">
