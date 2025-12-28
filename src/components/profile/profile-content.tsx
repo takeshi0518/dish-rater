@@ -24,7 +24,7 @@ export default function ProfileContent({
 }: ProfileContentProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="container mx-auto max-w-full">
       {/* プロフィールヘッダー */}
       <div className="mb-6 p-4">
         <div className="flex items-center gap-4 mb-4">
