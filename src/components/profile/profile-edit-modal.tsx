@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import type { Profile } from '@/app/types/dish';
+import { ProfilePageData } from '@/app/types/profile';
 import { Label } from '../ui/label';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -16,7 +16,7 @@ import { createClient } from '@/lib/supabase/client';
 type ProfileEditModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  profile: Profile;
+  profile: ProfilePageData;
 };
 
 function UserNameInput({
