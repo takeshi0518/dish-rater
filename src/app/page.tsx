@@ -50,7 +50,7 @@ export default function Home() {
         </div>
         <div className="w-full max-w-[300px] lg:max-w-[600px]">
           <Image
-            src="/img/dummy-image.png"
+            src="/img/dish-rater-mockup.webp"
             alt="dummy"
             className="w-full h-auto"
             sizes="(max-width: 768px) 300px, 600px"
