@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 import { createClient } from '@/lib/supabase/client';
 import DishesDetail from '@/components/dish/dish-detail';
-import { Dish } from '@/app/types/dish';
+import { DishDetail } from '@/app/types/dish';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -15,7 +15,7 @@ type Props = {
 
 export default function DishModalPage({ params }: Props) {
   const router = useRouter();
-  const [dish, setDish] = useState<Dish | null>(null);
+  const [dish, setDish] = useState<DishDetail | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [id, setId] = useState<string>('');
