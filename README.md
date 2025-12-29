@@ -2,6 +2,8 @@
 
 料理の評価・記録を共有できる Web アプリケーション
 
+![dish-rater](./public/img/dish-rater-mockup.webp)
+
 ## 概要
 
 dish-rater は、レストランや自炊の料理を記録・評価し、他のユーザーと共有できる SNS 風アプリケーションです。
@@ -18,7 +20,7 @@ dish-rater は、レストランや自炊の料理を記録・評価し、他の
 
 ### フロントエンド
 
-- **Next.js 15** - App Router
+- **Next.js 16** - App Router
 - **TypeScript** - 型安全性
 - **Tailwind CSS** - スタイリング
 - **shadcn/ui** - UI コンポーネント
@@ -123,8 +125,7 @@ http://localhost:3000 にアクセス
 
 ## 今後の予定
 
+- [ ] テスト実装
 - [ ] 料理の検索・フィルター機能
 - [ ] いいね機能
 - [ ] コメント機能
-- [ ] テスト実装
-- [ ] デプロイ（Vercel）
