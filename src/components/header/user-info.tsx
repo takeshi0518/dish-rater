@@ -1,6 +1,10 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/Icon/icons';
 import { User } from '@/app/types/user';
+import { signOut } from '@/app/actions/auth-actions';
+import { useState } from 'react';
 
 type UserInfoProps = {
   user: User | null;
@@ -8,8 +12,20 @@ type UserInfoProps = {
 };
 
 export default function UserInfo({ user, variant = 'compact' }: UserInfoProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const userName =
     user?.user_metadata?.name || user?.email?.split('@')[0] || 'user';
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (variant === 'compact') {
     // モバイル用ヘッダー
@@ -26,11 +42,19 @@ export default function UserInfo({ user, variant = 'compact' }: UserInfoProps) {
               <span className="text-sm truncate">{userName}</span>
             </li>
             <li>
-              <form action="/auth/signout" method="post">
-                <Button size="sm" variant="outline" className="cursor-pointer">
-                  Logout
-                </Button>
-              </form>
+              <Button
+                size="sm"
+                variant="outline"
+                className="cursor-pointer"
+                onClick={handleLogout}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Icons.loaderCircle className="animate-spin w-5 h-5" />
+                ) : (
+                  'Logout'
+                )}
+              </Button>
             </li>
           </>
         ) : (
@@ -58,15 +82,19 @@ export default function UserInfo({ user, variant = 'compact' }: UserInfoProps) {
             <Icons.userIcon size={20} color="orange" />
             <span className="text-sm font-medium truncate">{userName}</span>
           </div>
-          <form action="/auth/signout" method="post">
-            <Button
-              size="sm"
-              variant="outline"
-              className="cursor-pointer w-full hover:bg-gray-50"
-            >
-              Logout
-            </Button>
-          </form>
+          <Button
+            size="sm"
+            variant="outline"
+            className="cursor-pointer w-full hover:bg-gray-50"
+            onClick={handleLogout}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Icons.loaderCircle className="animate-spin w-5 h-5" />
+            ) : (
+              'Logout'
+            )}
+          </Button>
         </div>
       ) : (
         <div className="bg-white rounded-lg p-3 shadow-sm flex gap-2">
