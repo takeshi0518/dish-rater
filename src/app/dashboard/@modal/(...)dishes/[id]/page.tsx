@@ -88,7 +88,7 @@ export default function DishModalPage({ params }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-3xl w-full p-0 max-h-[95vh] overflow-y-auto rounded-none">
+      <DialogContent className="max-w-3xl w-full p-0 max-h-[95vh] md:max-h-[80vh] overflow-y-auto rounded-none">
         <DialogTitle className="sr-only">料理の詳細</DialogTitle>
         <DishesDetail
           dish={dish}
